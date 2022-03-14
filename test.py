@@ -843,6 +843,9 @@ class VirtualKeyboardWindow(QWidget):
         # self.kbip.setFocus()
 
     def buttonClicked(self, char_ord):
+        # ui.click.play()
+        # time.sleep(0.5)
+        ui.haptic_flag = 1
         txt = self.kbip.text()
 
         if char_ord == Qt.Key_Clear:
@@ -1077,9 +1080,14 @@ class UI():
         #  BGM thread
         self.flag = 1
         self.Player = QMediaPlayer()
+        self.click = QMediaPlayer()
+        self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
         self.music = threading.Thread(target=self.loop)
+        self.haptic = threading.Thread(target=self.play_click)
+        self.haptic_flag = 0
         self.music.daemon = True
         self.music.start()
+        self.haptic.start()
 
     def run_ad(self):
         if gv.SettingsInputs.value('Screensaver') == 'Videos':
@@ -1126,6 +1134,12 @@ class UI():
                 if self.flag == 0:
                     self.Player.play()
 
+    def play_click(self):
+        while True:
+            if self.haptic_flag == 1:
+                self.click.play()
+                self.haptic_flag = 0
+
 ###################################################################################
 ###################################################################################
 
@@ -1148,6 +1162,7 @@ background = 'Sounds/Background.wav'
 insertcoin = 'Sounds/InsertCoin.mp3'
 printM = 'Sounds/Print.mp3'
 sms = 'Sounds/sms.mp3'
+click_sound = 'Sounds/kbclick.wav'
 
 ###################################################################################
 # Application

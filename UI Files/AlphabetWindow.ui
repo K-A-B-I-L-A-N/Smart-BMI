@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>417</height>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,103 +20,6 @@ border-radius:15px;
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>11</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item>
-      <widget class="QLabel" name="kb_lb">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
-
-</string>
-       </property>
-       <property name="text">
-        <string>TextLabel :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="kbip">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>280</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
-
-</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="clr_bt">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>51</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
-
-</string>
-       </property>
-       <property name="text">
-        <string>X</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="q_bt">
@@ -126,20 +29,43 @@ background-color: rgb(62, 62, 62);
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
          <width>16777215</width>
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
+
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 
 </string>
        </property>
        <property name="text">
-        <string>Q</string>
+        <string>q</string>
        </property>
       </widget>
      </item>
@@ -157,14 +83,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>W</string>
+        <string>w</string>
        </property>
       </widget>
      </item>
@@ -182,14 +120,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>E</string>
+        <string>e</string>
        </property>
       </widget>
      </item>
@@ -207,14 +157,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>R</string>
+        <string>r</string>
        </property>
       </widget>
      </item>
@@ -232,14 +194,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>T</string>
+        <string>t</string>
        </property>
       </widget>
      </item>
@@ -257,14 +231,29 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>Y</string>
+        <string>y</string>
        </property>
       </widget>
      </item>
@@ -282,14 +271,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>U</string>
+        <string>u</string>
        </property>
       </widget>
      </item>
@@ -307,14 +308,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>I</string>
+        <string>i</string>
        </property>
       </widget>
      </item>
@@ -332,14 +344,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>O</string>
+        <string>o</string>
        </property>
       </widget>
      </item>
@@ -357,14 +380,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>P</string>
+        <string>p</string>
        </property>
       </widget>
      </item>
@@ -373,10 +407,10 @@ background-color: rgb(62, 62, 62);
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="leftMargin">
-      <number>16</number>
+      <number>25</number>
      </property>
      <property name="rightMargin">
-      <number>16</number>
+      <number>25</number>
      </property>
      <item>
       <widget class="QPushButton" name="a_bt">
@@ -392,14 +426,28 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>A</string>
+        <string>a</string>
        </property>
       </widget>
      </item>
@@ -417,14 +465,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>S</string>
+        <string>s</string>
        </property>
       </widget>
      </item>
@@ -442,14 +501,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>D</string>
+        <string>d</string>
        </property>
       </widget>
      </item>
@@ -467,14 +537,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>F</string>
+        <string>f</string>
        </property>
       </widget>
      </item>
@@ -492,14 +573,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>G</string>
+        <string>g</string>
        </property>
       </widget>
      </item>
@@ -517,14 +609,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>H</string>
+        <string>h</string>
        </property>
       </widget>
      </item>
@@ -542,14 +645,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>J</string>
+        <string>j</string>
        </property>
       </widget>
      </item>
@@ -567,14 +681,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>K</string>
+        <string>k</string>
        </property>
       </widget>
      </item>
@@ -592,14 +717,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>L</string>
+        <string>l</string>
        </property>
       </widget>
      </item>
@@ -627,14 +763,37 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
+        <string notr="true">QPushButton {
+	background-color: rgb(193, 193, 193);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>CAPS</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../designs/icons/caps off.png</normaloff>../designs/icons/caps off.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>25</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -652,14 +811,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>Z</string>
+        <string>z</string>
        </property>
       </widget>
      </item>
@@ -677,14 +848,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>X</string>
+        <string>x</string>
        </property>
       </widget>
      </item>
@@ -702,14 +884,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>C</string>
+        <string>c</string>
        </property>
       </widget>
      </item>
@@ -727,14 +920,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>V</string>
+        <string>v</string>
        </property>
       </widget>
      </item>
@@ -752,14 +956,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>B</string>
+        <string>b</string>
        </property>
       </widget>
      </item>
@@ -777,14 +992,25 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>N</string>
+        <string>n</string>
        </property>
       </widget>
      </item>
@@ -802,14 +1028,26 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>M</string>
+        <string>m</string>
        </property>
       </widget>
      </item>
@@ -833,14 +1071,35 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
+        <string notr="true">QPushButton {
+	color: rgb(255, 255, 255);
+	
+	background-color: rgb(255, 1, 18);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
-        <string>&lt;--</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../designs/icons/backspacebt.png</normaloff>../designs/icons/backspacebt.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -858,15 +1117,26 @@ background-color: rgb(62, 62, 62);
        </property>
        <property name="maximumSize">
         <size>
-         <width>90</width>
+         <width>112</width>
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
         <string>?123</string>
@@ -893,11 +1163,22 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
+        <string notr="true">QPushButton {
+color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
+}
 
-</string>
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
        </property>
        <property name="text">
         <string>Space</string>
@@ -905,7 +1186,7 @@ background-color: rgb(62, 62, 62);
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="return_bt">
+      <widget class="QPushButton" name="done_bt">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -918,14 +1199,37 @@ background-color: rgb(62, 62, 62);
          <height>51</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
+        <string notr="true">QPushButton {
+	
+	background-color: rgb(0, 201, 223);
+	color: rgb(255, 255, 255);
+}
 
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}
 </string>
        </property>
        <property name="text">
-        <string>Return</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../designs/icons/enter icon.png</normaloff>../designs/icons/enter icon.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>70</width>
+         <height>30</height>
+        </size>
        </property>
       </widget>
      </item>

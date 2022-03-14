@@ -5,7 +5,7 @@ import time
 import serial
 import threading
 import serial.tools.list_ports
-from PyQt5 import uic
+from PyQt5 import uic,QtGui
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import *
 
 
 # APP
-####################################################################################
+#####################################################################################
 
 class ImageAdDisplayWindow(QMainWindow):
     def __init__(self):
@@ -158,14 +158,22 @@ class MainMenu(QMainWindow):
         self.Password_ip.setVisible(False)
 
     def gotoSettingsOptions(self):
+
         if self.Password_ip.text() == 'admin':
+            self.Password_ip.clear()
             self.Admin_bt.setVisible(False)
             self.Login_bt.setVisible(False)
             self.Cancel_bt.setVisible(False)
             self.Password_label.setVisible(False)
             self.Password_ip.setVisible(False)
             ui.widget.setCurrentWidget(ui.OptionsW)
-        self.Password_ip.clear()
+
+        else:
+            self.Password_ip.clear()
+            msg = QMessageBox()
+            msg.setText("Enter a the correct password")
+            msg.setIcon(QMessageBox.Information)
+            x = msg.exec_()
 
     def gotoAD(self):
         self.Admin_bt.setVisible(False)
@@ -331,7 +339,6 @@ class SMSCWindow(QMainWindow):
         self.Close_bt.clicked.connect(self.gotoSettingsOptions)
         self.Mbno_ip.setText(gv.SettingsInputs.value('smscW Mbno'))
         self.Msg_ip.setText(gv.SettingsInputs.value('smscW Msg'))
-        self.Mbno_ip.setValidator(QIntValidator())
         self.Mbno_ip.mousePressEvent = vkpW.kb_disp
         self.Msg_ip.mousePressEvent = vkbW.kb_disp
 
@@ -510,30 +517,29 @@ class PSSWindow(QMainWindow):
         self.Ft2_cb.setVisible(True)
         self.Ft3_cb.setVisible(True)
 
-
     def saveOptions(self):
         if self.H_def_rb.isChecked():
             self.list[0] = 'Default'
         else:
             self.list[0] = 'Text'
-            gv.SettingsInputs.setValue('Header 1',self.Hd1_ip.text())
-            gv.SettingsInputs.setValue('Header 2',self.Hd2_ip.text())
-            gv.SettingsInputs.setValue('Header 3',self.Hd3_ip.text())
+            gv.SettingsInputs.setValue('Header 1', self.Hd1_ip.text())
+            gv.SettingsInputs.setValue('Header 2', self.Hd2_ip.text())
+            gv.SettingsInputs.setValue('Header 3', self.Hd3_ip.text())
 
         if self.F_def_rb.isChecked():
             self.list[1] = 'Default'
         else:
             self.list[1] = 'Text'
-            gv.SettingsInputs.setValue('Footer 1',self.Ft1_ip.text())
-            gv.SettingsInputs.setValue('Footer 2',self.Ft2_ip.text())
-            gv.SettingsInputs.setValue('Footer 3',self.Ft3_ip.text())
+            gv.SettingsInputs.setValue('Footer 1', self.Ft1_ip.text())
+            gv.SettingsInputs.setValue('Footer 2', self.Ft2_ip.text())
+            gv.SettingsInputs.setValue('Footer 3', self.Ft3_ip.text())
 
         if self.Yes_rb.isChecked():
             self.list[2] = 'Yes'
         else:
             self.list[2] = 'No'
 
-        self.list[3:9] = [self.Hd1_cb.isChecked(), self.Hd2_cb.isChecked(), self.Hd3_cb.isChecked(), 
+        self.list[3:9] = [self.Hd1_cb.isChecked(), self.Hd2_cb.isChecked(), self.Hd3_cb.isChecked(),
                           self.Ft1_cb.isChecked(), self.Ft2_cb.isChecked(), self.Ft3_cb.isChecked()]
         gv.SettingsInputs.setValue('PSS', self.list)
         self.gotoSettingsOptions()
@@ -650,6 +656,7 @@ class BMI(QMainWindow):
 
     def displayTime(self):
         if self.secs == 0:
+            self.lb_timer_bmi.setText("")
             self.secs = 10
             self.timer.stop()
             if gv.SettingsInputs.value('Print or SMS') == 'Print and SMS':
@@ -718,10 +725,19 @@ class SendSMSWindow(QMainWindow):
         ui.widget.setCurrentWidget(ui.posW)
 
     def gotogdW(self):
-        self.Mbno_ip.clear()
-        ui.play_sms()
-        ui.widget.setCurrentWidget(ui.gdW)
-        ui.gdW.countdown()
+        if len(self.Mbno_ip.text()) == 10:
+            self.Mbno_ip.clear()
+            ui.play_sms()
+            ui.widget.setCurrentWidget(ui.gdW)
+            ui.gdW.countdown()
+
+        else:
+            self.Mbno_ip.clear()
+            msg = QMessageBox()
+            msg.setText("Enter a valid phone number")
+            msg.setIcon(QMessageBox.Information)
+            x = msg.exec_()
+
 
 ###################################################################################
 
@@ -804,6 +820,7 @@ class VirtualKeyboardWindow(QWidget):
         # clicked functions
 
         for button, name in zip(self.buttons, self.names):
+            button.setFont(QtGui.QFont("Proxima Nova", 18))
             button.KEY_CHAR = ord(name)
             button.clicked.connect(self.signalmapper.map)
             self.signalmapper.setMapping(button, button.KEY_CHAR)
@@ -826,6 +843,9 @@ class VirtualKeyboardWindow(QWidget):
         # self.kbip.setFocus()
 
     def buttonClicked(self, char_ord):
+        # ui.click.play()
+        # time.sleep(0.5)
+        ui.haptic_flag = 1
         txt = self.kbip.text()
 
         if char_ord == Qt.Key_Clear:
@@ -931,6 +951,7 @@ class VirtualKeypadWindow(QWidget):
         uic.loadUi("UI Files\VirtualKeypadWindow.ui", self)
         self.resize(600, 512)
         self.LE = QLineEdit()
+        self.kpip.setValidator(QIntValidator())
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.move(640, 652)
         self.signalmapper = QSignalMapper()
@@ -980,30 +1001,35 @@ class VirtualKeypadWindow(QWidget):
         if ui.wcW.Mc_ip.hasFocus():
             self.hide()
             self.kpip.setText(ui.wcW.Mc_ip.text())
+            self.kpip.setMaxLength(32767)
             self.show()
             self.LE = ui.wcW.Mc_ip
 
         elif ui.wcW.Cc_ip.hasFocus():
             self.hide()
             self.kpip.setText(ui.wcW.Cc_ip.text())
+            self.kpip.setMaxLength(32767)
             self.show()
             self.LE = ui.wcW.Cc_ip
 
         elif ui.hcW.RefH_ip.hasFocus():
             self.hide()
             self.kpip.setText(ui.hcW.RefH_ip.text())
+            self.kpip.setMaxLength(32767)
             self.show()
             self.LE = ui.hcW.RefH_ip
 
         elif ui.smscW.Mbno_ip.hasFocus():
             self.hide()
             self.kpip.setText(ui.smscW.Mbno_ip.text())
+            self.kpip.setMaxLength(10)
             self.show()
             self.LE = ui.smscW.Mbno_ip
 
         elif ui.ssmsW.Mbno_ip.hasFocus():
             self.hide()
             self.kpip.setText(ui.ssmsW.Mbno_ip.text())
+            self.kpip.setMaxLength(10)
             self.show()
             self.LE = ui.ssmsW.Mbno_ip
 
@@ -1014,6 +1040,7 @@ class VirtualKeypadWindow(QWidget):
 class UI():
     def __init__(self):
         self.widget = QStackedWidget()
+        self.widget.setWindowFlag(Qt.FramelessWindowHint)
         # Instances of windows
         self.InsertW = InsertWindow()
         self.vidAdW = VideoAdDisplayWindow()
@@ -1053,8 +1080,14 @@ class UI():
         #  BGM thread
         self.flag = 1
         self.Player = QMediaPlayer()
+        self.click = QMediaPlayer()
+        self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
         self.music = threading.Thread(target=self.loop)
+        self.haptic = threading.Thread(target=self.play_click)
+        self.haptic_flag = 0
+        self.music.daemon = True
         self.music.start()
+        self.haptic.start()
 
     def run_ad(self):
         if gv.SettingsInputs.value('Screensaver') == 'Videos':
@@ -1101,6 +1134,12 @@ class UI():
                 if self.flag == 0:
                     self.Player.play()
 
+    def play_click(self):
+        while True:
+            if self.haptic_flag == 1:
+                self.click.play()
+                self.haptic_flag = 0
+
 ###################################################################################
 ###################################################################################
 
@@ -1113,7 +1152,6 @@ class GV():
     def getSettingsValues(self):
         self.SettingsInputs = QSettings('Smart BMI', 'SettingsWindow')
 
-
 gv = GV()
 os.system("python img2SS.py")
 
@@ -1124,9 +1162,10 @@ background = 'Sounds/Background.wav'
 insertcoin = 'Sounds/InsertCoin.mp3'
 printM = 'Sounds/Print.mp3'
 sms = 'Sounds/sms.mp3'
+click_sound = 'Sounds/kbclick.wav'
 
 ###################################################################################
-# Application Bootup
+# Application
 
 app = QApplication(sys.argv)
 vkbW = VirtualKeyboardWindow()
