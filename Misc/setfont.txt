@@ -1,0 +1,3 @@
+self.fontDB = QtGui.QFontDatabase()
+self.fontDB.addApplicationFont(":/resources/Proxima Nova Font.otf")
+self.setFont(QtGui.QFont("Proxima Nova", 18))

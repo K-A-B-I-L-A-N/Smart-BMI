@@ -5,7 +5,7 @@ import time
 import serial
 import threading
 import serial.tools.list_ports
-from PyQt5 import uic
+from PyQt5 import uic,QtGui
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -820,6 +820,7 @@ class VirtualKeyboardWindow(QWidget):
         # clicked functions
 
         for button, name in zip(self.buttons, self.names):
+            button.setFont(QtGui.QFont("Proxima Nova", 18))
             button.KEY_CHAR = ord(name)
             button.clicked.connect(self.signalmapper.map)
             self.signalmapper.setMapping(button, button.KEY_CHAR)
