@@ -33,46 +33,6 @@ border-radius:15px;</string>
       <number>4</number>
      </property>
      <item>
-      <widget class="QLabel" name="kb_lb">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Proxima Nova</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(67, 255, 255);
-background-color: rgb(62, 62, 62);
-
-</string>
-       </property>
-       <property name="text">
-        <string>LE :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLineEdit" name="kbip">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -99,15 +59,8 @@ background-color: rgb(62, 62, 62);
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">QLineEdit {
-color: rgb(67, 255, 255);
+        <string notr="true">color: rgb(67, 255, 255);
 background-color: rgb(62, 62, 62);
-}
-
-QLineEdit:focus{
-	border:2px solid;
-	border-color : white;
-}
 
 </string>
        </property>

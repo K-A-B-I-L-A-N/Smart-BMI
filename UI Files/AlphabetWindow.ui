@@ -407,10 +407,10 @@ QPushButton:focus{
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <property name="leftMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
      <property name="rightMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
      <item>
       <widget class="QPushButton" name="a_bt">
