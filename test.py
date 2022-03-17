@@ -5,7 +5,7 @@ import time
 import serial
 import threading
 import serial.tools.list_ports
-from PyQt5 import uic,QtGui
+from PyQt5 import uic, QtGui
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -545,8 +545,8 @@ class PSSWindow(QMainWindow):
         gv.SettingsInputs.setValue('PSS', self.list)
 
         if (len(self.Hd1_ip.text()) > 0 and len(self.Hd2_ip.text()) > 0 and len(self.Hd3_ip.text()) > 0
-            and len(self.Ft1_ip.text()) > 0 and len(self.Ft2_ip.text()) > 0 and len(self.Ft3_ip.text()) > 0):
-            
+                and len(self.Ft1_ip.text()) > 0 and len(self.Ft2_ip.text()) > 0 and len(self.Ft3_ip.text()) > 0):
+
             self.gotoSettingsOptions()
 
         else:
@@ -554,7 +554,7 @@ class PSSWindow(QMainWindow):
             msg = QMessageBox()
             msg.setText("Don't Leave Textfields empty")
             msg.setIcon(QMessageBox.Information)
-            x = msg.exec_() 
+            x = msg.exec_()
 
     def gotoSettingsOptions(self):
         ui.widget.setCurrentWidget(ui.OptionsW)
@@ -808,12 +808,13 @@ class NoPaperWindow(QMainWindow):
 # APP
 ###################################################################################
 
+
 class KBIPWindow(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\KeyboardInputWindow.ui", self)
         self.setWindowFlag(Qt.FramelessWindowHint)
-        self.move(640,715)
+        self.move(640, 715)
         self.clr_bt.clicked.connect(self.clear_text)
         self.clr_bt.setVisible(False)
         self.kbip.textChanged.connect(self.show_clr_bt)
@@ -830,6 +831,7 @@ class KBIPWindow(QWidget):
             self.clr_bt.setVisible(True)
 
 ###################################################################################
+
 
 class AlphabetsWindow(QWidget):
     def __init__(self):
@@ -877,16 +879,17 @@ class AlphabetsWindow(QWidget):
 
             if self.lower_flag == 0:
                 self.lower_flag = 1
-                self.caps_bt.setIcon(QIcon(QPixmap("designs\icons\caps off.png")))
+                self.caps_bt.setIcon(
+                    QIcon(QPixmap("designs\icons\caps off.png")))
                 for button in self.buttons:
                     button.setText(button.text().lower())
 
             else:
                 self.lower_flag = 0
-                self.caps_bt.setIcon(QIcon(QPixmap("designs\icons\caps on.png")))
+                self.caps_bt.setIcon(
+                    QIcon(QPixmap("designs\icons\caps on.png")))
                 for button in self.buttons:
                     button.setText(button.text().upper())
-
 
         elif char_ord == Qt.Key_Backspace:
             txt = txt[:-1]
@@ -926,7 +929,7 @@ class AlphabetsWindow(QWidget):
         kbipW.show()
 
         if ui.mmW.Password_ip.hasFocus():
-        
+
             kbipW.kbip.setText(ui.mmW.Password_ip.text())
             self.LE = ui.mmW.Password_ip
 
@@ -960,6 +963,7 @@ class AlphabetsWindow(QWidget):
 
 ###################################################################################
 
+
 class NumpadWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -968,7 +972,8 @@ class NumpadWindow(QWidget):
         self.signalmapper = QSignalMapper()
         self.signalmapper.mapped[int].connect(self.buttonClicked)
 
-        self.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', ',', '/', '-', '*']
+        self.names = ['1', '2', '3', '4', '5', '6',
+                      '7', '8', '9', '0', '.', ',', '/', '-', '*']
         self.buttons = [self.one_bt, self.two_bt, self.three_bt, self.four_bt, self.five_bt,
                         self.six_bt, self.seven_bt, self.eight_bt, self.nine_bt, self.zero_bt,
                         self.dot_bt, self.comma_bt, self.fslash_bt, self.hyphen_bt, self.star_bt]
@@ -1040,20 +1045,21 @@ class NumpadWindow(QWidget):
 
 #############################################################################################
 
+
 class NumbersandSymbolsWindow(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(R"UI Files\NumberandSymbolsWindow.ui", self)
         self.signalmapper = QSignalMapper()
         self.signalmapper.mapped[int].connect(self.buttonClicked)
-        self.names = ['1','2','3','4','5','6','7','8','9','0','-','/',
-                      ':','~','(',')','$','&',"'",'"','+','@','.',',',
-                      '?','!','#','%','*']
+        self.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '/',
+                      ':', '~', '(', ')', '$', '&', "'", '"', '+', '@', '.', ',',
+                      '?', '!', '#', '%', '*']
 
         self.buttons = [self.one_bt, self.two_bt, self.three_bt, self.four_bt, self.five_bt, self.six_bt, self.seven_bt, self.eight_bt,
                         self.nine_bt, self.zero_bt, self.hyphen_bt, self.fslash_bt, self.colon_bt, self.tilde_bt, self.ob_bt, self.cb_bt,
-                        self.dollar_bt, self.and_bt, self.sapostrophe_bt, self.dapostrophe_bt, self.plus_bt, self.at_bt, self.dot_bt, 
-                        self.comma_bt, self.qmark_bt, self.excmark_bt, self.hash_bt, self.percentage_bt,self.star_bt]
+                        self.dollar_bt, self.and_bt, self.sapostrophe_bt, self.dapostrophe_bt, self.plus_bt, self.at_bt, self.dot_bt,
+                        self.comma_bt, self.qmark_bt, self.excmark_bt, self.hash_bt, self.percentage_bt, self.star_bt]
         # clicked functions
 
         for button, name in zip(self.buttons, self.names):
@@ -1200,7 +1206,7 @@ class UI():
                 time.sleep(1.5)
                 if self.flag == 0:
                     self.Player.play()
-                    
+
             if self.haptic_flag == 1:
                 self.click.play()
                 self.haptic_flag = 0
@@ -1216,6 +1222,7 @@ class GV():
 
     def getSettingsValues(self):
         self.SettingsInputs = QSettings('Smart BMI', 'SettingsWindow')
+
 
 gv = GV()
 os.system("python img2SS.py")
@@ -1236,12 +1243,12 @@ app = QApplication(sys.argv)
 kbui = QStackedWidget()
 kbui.setWindowFlag(Qt.FramelessWindowHint)
 kbui.setStyleSheet(
-                    """QStackedWidget
+    """QStackedWidget
                         {
                         background-color: rgb(35, 35, 35);
                         border-radius:15px;
-                    }"""  
-                    )
+                    }"""
+)
 kbui.setGeometry(640, 790, 600, 375)
 kbipW = KBIPWindow()
 alpW = AlphabetsWindow()
