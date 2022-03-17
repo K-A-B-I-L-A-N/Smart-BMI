@@ -541,8 +541,20 @@ class PSSWindow(QMainWindow):
 
         self.list[3:9] = [self.Hd1_cb.isChecked(), self.Hd2_cb.isChecked(), self.Hd3_cb.isChecked(),
                           self.Ft1_cb.isChecked(), self.Ft2_cb.isChecked(), self.Ft3_cb.isChecked()]
+
         gv.SettingsInputs.setValue('PSS', self.list)
-        self.gotoSettingsOptions()
+
+        if (len(self.Hd1_ip.text()) > 0 and len(self.Hd2_ip.text()) > 0 and len(self.Hd3_ip.text()) > 0
+            and len(self.Ft1_ip.text()) > 0 and len(self.Ft2_ip.text()) > 0 and len(self.Ft3_ip.text()) > 0):
+            
+            self.gotoSettingsOptions()
+
+        else:
+
+            msg = QMessageBox()
+            msg.setText("Don't Leave Textfields empty")
+            msg.setIcon(QMessageBox.Information)
+            x = msg.exec_() 
 
     def gotoSettingsOptions(self):
         ui.widget.setCurrentWidget(ui.OptionsW)
@@ -858,6 +870,7 @@ class AlphabetsWindow(QWidget):
         kbui.setCurrentWidget(nsW)
 
     def buttonClicked(self, char_ord):
+        ui.haptic_flag = 1
         txt = kbipW.kbip.text()
 
         if char_ord == Qt.Key_CapsLock:
@@ -913,6 +926,7 @@ class AlphabetsWindow(QWidget):
         kbipW.show()
 
         if ui.mmW.Password_ip.hasFocus():
+        
             kbipW.kbip.setText(ui.mmW.Password_ip.text())
             self.LE = ui.mmW.Password_ip
 
@@ -975,6 +989,7 @@ class NumpadWindow(QWidget):
         self.signalmapper.setMapping(self.done_bt, Qt.Key_Home)
 
     def buttonClicked(self, char_ord):
+        ui.haptic_flag = 1
         txt = kbipW.kbip.text()
 
         if char_ord == Qt.Key_Backspace:
@@ -1061,6 +1076,8 @@ class NumbersandSymbolsWindow(QWidget):
         kbui.setCurrentWidget(alpW)
 
     def buttonClicked(self, char_ord):
+        ui.haptic_flag = 1
+
         txt = kbipW.kbip.text()
 
         if char_ord == Qt.Key_Backspace:
@@ -1132,7 +1149,10 @@ class UI():
         #  BGM thread
         self.flag = 1
         self.Player = QMediaPlayer()
+        self.click = QMediaPlayer()
+        self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
         self.music = threading.Thread(target=self.loop)
+        self.haptic_flag = 0
         self.music.daemon = True
         self.music.start()
 
@@ -1180,6 +1200,10 @@ class UI():
                 time.sleep(1.5)
                 if self.flag == 0:
                     self.Player.play()
+                    
+            if self.haptic_flag == 1:
+                self.click.play()
+                self.haptic_flag = 0
 
 ###################################################################################
 ###################################################################################
