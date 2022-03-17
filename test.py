@@ -137,7 +137,7 @@ class MainMenu(QMainWindow):
         self.Login_bt.clicked.connect(self.gotoSettingsOptions)
         self.Cancel_bt.clicked.connect(self.cancel)
         self.Back_bt.clicked.connect(self.gotoAD)
-        self.Password_ip.mousePressEvent = alpW.kb_disp
+        self.Password_ip.mousePressEvent = KB.alpW.kb_disp
 
     def keyPressEvent(self, event):
         if event.key() == 65:
@@ -280,8 +280,8 @@ class WCWindow(QMainWindow):
         super().__init__()
         uic.loadUi("UI Files\WeightCalibrationWindow.ui", self)
         self.Close_bt.clicked.connect(self.gotoSettingsOptions)
-        self.Mc_ip.mousePressEvent = npW.kb_disp
-        self.Cc_ip.mousePressEvent = npW.kb_disp
+        self.Mc_ip.mousePressEvent = KB.npW.kb_disp
+        self.Cc_ip.mousePressEvent = KB.npW.kb_disp
 
     def gotoSettingsOptions(self):
         ui.widget.setCurrentWidget(ui.OptionsW)
@@ -303,7 +303,7 @@ class HCWindow(QMainWindow):
         self.RefH_ip.setVisible(False)
         self.Close_bt.clicked.connect(self.hide)
         self.Set_bt.clicked.connect(self.show_params)
-        self.RefH_ip.mousePressEvent = npW.kb_disp
+        self.RefH_ip.mousePressEvent = KB.npW.kb_disp
 
     def show_params(self):
         self.Ah_lb.setVisible(True)
@@ -339,8 +339,8 @@ class SMSCWindow(QMainWindow):
         self.Close_bt.clicked.connect(self.gotoSettingsOptions)
         self.Mbno_ip.setText(gv.SettingsInputs.value('smscW Mbno'))
         self.Msg_ip.setText(gv.SettingsInputs.value('smscW Msg'))
-        self.Mbno_ip.mousePressEvent = npW.kb_disp
-        self.Msg_ip.mousePressEvent = alpW.kb_disp
+        self.Mbno_ip.mousePressEvent = KB.npW.kb_disp
+        self.Msg_ip.mousePressEvent = KB.alpW.kb_disp
 
     def enable(self):
         self.Dc_bt.setEnabled(True)
@@ -450,12 +450,12 @@ class PSSWindow(QMainWindow):
         self.F_text_rb.clicked.connect(self.showsaved_Fvalues)
         self.Yes_rb.clicked.connect(self.show_footer)
         self.No_rb.clicked.connect(self.hide_footer)
-        self.Hd1_ip.mousePressEvent = alpW.kb_disp
-        self.Hd2_ip.mousePressEvent = alpW.kb_disp
-        self.Hd3_ip.mousePressEvent = alpW.kb_disp
-        self.Ft1_ip.mousePressEvent = alpW.kb_disp
-        self.Ft2_ip.mousePressEvent = alpW.kb_disp
-        self.Ft3_ip.mousePressEvent = alpW.kb_disp
+        self.Hd1_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Hd2_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Hd3_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft1_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft2_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft3_ip.mousePressEvent = KB.alpW.kb_disp
         self.setOptions()
 
     def setOptions(self):
@@ -729,7 +729,7 @@ class SendSMSWindow(QMainWindow):
         uic.loadUi("UI Files\SendSMSWindow.ui", self)
         self.Back_bt.clicked.connect(self.gotoPOSWindow)
         self.Send_bt.clicked.connect(self.gotogdW)
-        self.Mbno_ip.mousePressEvent = npW.kb_disp
+        self.Mbno_ip.mousePressEvent = KB.npW.kb_disp
 
     def gotoPOSWindow(self):
         self.Mbno_ip.clear()
@@ -869,11 +869,11 @@ class AlphabetsWindow(QWidget):
         self.ns_bt.clicked.connect(self.show_nsw)
 
     def show_nsw(self):
-        kbui.setCurrentWidget(nsW)
+        KB.kbui.setCurrentWidget(KB.nsW)
 
     def buttonClicked(self, char_ord):
-        ui.haptic_flag = 1
-        txt = kbipW.kbip.text()
+        # ui.haptic_flag = 1
+        txt = KB.kbipW.kbip.text()
 
         if char_ord == Qt.Key_CapsLock:
 
@@ -898,8 +898,8 @@ class AlphabetsWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            kbui.close()
-            kbipW.close()
+            KB.kbui.close()
+            KB.kbipW.close()
             self.LE.setText(txt)
 
         else:
@@ -911,9 +911,9 @@ class AlphabetsWindow(QWidget):
             except:
                 pass
 
-        kbipW.activateWindow()
-        kbipW.kbip.setText(txt)
-        kbipW.kbip.setFocus()
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.kbip.setFocus()
 
     def kb_disp(self, event):
 
@@ -922,43 +922,43 @@ class AlphabetsWindow(QWidget):
         for button in self.buttons:
             button.setText(button.text().lower())
 
-        kbui.setCurrentWidget(alpW)
-        kbui.hide()
-        kbipW.hide()
-        kbui.show()
-        kbipW.show()
+        KB.kbui.setCurrentWidget(KB.alpW)
+        KB.kbui.hide()
+        KB.kbipW.hide()
+        KB.kbui.show()
+        KB.kbipW.show()
 
         if ui.mmW.Password_ip.hasFocus():
 
-            kbipW.kbip.setText(ui.mmW.Password_ip.text())
+            KB.kbipW.kbip.setText(ui.mmW.Password_ip.text())
             self.LE = ui.mmW.Password_ip
 
         elif ui.smscW.Msg_ip.hasFocus():
-            kbipW.kbip.setText(ui.smscW.Msg_ip.toPlainText())
+            KB.kbipW.kbip.setText(ui.smscW.Msg_ip.toPlainText())
             self.LE = ui.smscW.Msg_ip
 
         elif ui.pssW.Hd1_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Hd1_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Hd1_ip.text())
             self.LE = ui.pssW.Hd1_ip
 
         elif ui.pssW.Hd2_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Hd2_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Hd2_ip.text())
             self.LE = ui.pssW.Hd2_ip
 
         elif ui.pssW.Hd3_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Hd3_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Hd3_ip.text())
             self.LE = ui.pssW.Hd3_ip
 
         elif ui.pssW.Ft1_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Ft1_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Ft1_ip.text())
             self.LE = ui.pssW.Ft1_ip
 
         elif ui.pssW.Ft2_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Ft2_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Ft2_ip.text())
             self.LE = ui.pssW.Ft2_ip
 
         elif ui.pssW.Ft3_ip.hasFocus():
-            kbipW.kbip.setText(ui.pssW.Ft3_ip.text())
+            KB.kbipW.kbip.setText(ui.pssW.Ft3_ip.text())
             self.LE = ui.pssW.Ft3_ip
 
 ###################################################################################
@@ -994,8 +994,8 @@ class NumpadWindow(QWidget):
         self.signalmapper.setMapping(self.done_bt, Qt.Key_Home)
 
     def buttonClicked(self, char_ord):
-        ui.haptic_flag = 1
-        txt = kbipW.kbip.text()
+        # ui.haptic_flag = 1
+        txt = KB.kbipW.kbip.text()
 
         if char_ord == Qt.Key_Backspace:
             txt = txt[:-1]
@@ -1004,43 +1004,43 @@ class NumpadWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            kbui.close()
-            kbipW.close()
+            KB.kbui.close()
+            KB.kbipW.close()
             self.LE.setText(txt)
 
         else:
             txt += chr(char_ord)
 
-        kbipW.kbip.setText(txt)
-        kbipW.activateWindow()
-        kbipW.kbip.setFocus()
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setFocus()
 
     def kb_disp(self, event):
 
-        kbui.setCurrentWidget(npW)
-        kbui.hide()
-        kbipW.hide()
-        kbui.show()
-        kbipW.show()
+        KB.kbui.setCurrentWidget(KB.npW)
+        KB.kbui.hide()
+        KB.kbipW.hide()
+        KB.kbui.show()
+        KB.kbipW.show()
 
         if ui.wcW.Mc_ip.hasFocus():
-            kbipW.kbip.setText(ui.wcW.Mc_ip.text())
+            KB.kbipW.kbip.setText(ui.wcW.Mc_ip.text())
             self.LE = ui.wcW.Mc_ip
 
         elif ui.wcW.Cc_ip.hasFocus():
-            kbipW.kbip.setText(ui.wcW.Cc_ip.text())
+            KB.kbipW.kbip.setText(ui.wcW.Cc_ip.text())
             self.LE = ui.wcW.Cc_ip
 
         elif ui.hcW.RefH_ip.hasFocus():
-            kbipW.kbip.setText(ui.hcW.RefH_ip.text())
+            KB.kbipW.kbip.setText(ui.hcW.RefH_ip.text())
             self.LE = ui.hcW.RefH_ip
 
         elif ui.smscW.Mbno_ip.hasFocus():
-            kbipW.kbip.setText(ui.smscW.Mbno_ip.text())
+            KB.kbipW.kbip.setText(ui.smscW.Mbno_ip.text())
             self.LE = ui.smscW.Mbno_ip
 
         elif ui.ssmsW.Mbno_ip.hasFocus():
-            kbipW.kbip.setText(ui.ssmsW.Mbno_ip.text())
+            KB.kbipW.kbip.setText(ui.ssmsW.Mbno_ip.text())
             self.LE = ui.ssmsW.Mbno_ip
 
 #############################################################################################
@@ -1079,12 +1079,12 @@ class NumbersandSymbolsWindow(QWidget):
         self.abc_bt.clicked.connect(self.show_abc)
 
     def show_abc(self):
-        kbui.setCurrentWidget(alpW)
+        KB.kbui.setCurrentWidget(KB.alpW)
 
     def buttonClicked(self, char_ord):
-        ui.haptic_flag = 1
+        # ui.haptic_flag = 1
 
-        txt = kbipW.kbip.text()
+        txt = KB.kbipW.kbip.text()
 
         if char_ord == Qt.Key_Backspace:
             txt = txt[:-1]
@@ -1093,16 +1093,16 @@ class NumbersandSymbolsWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            kbui.close()
-            kbipW.close()
-            alpW.LE.setText(txt)
+            KB.kbui.close()
+            KB.kbipW.close()
+            KB.alpW.LE.setText(txt)
 
         else:
             txt += chr(char_ord)
 
-        kbipW.activateWindow()
-        kbipW.kbip.setText(txt)
-        kbipW.kbip.setFocus()
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.kbip.setFocus()
 
 
 ###################################################################################
@@ -1155,10 +1155,10 @@ class UI():
         #  BGM thread
         self.flag = 1
         self.Player = QMediaPlayer()
-        self.click = QMediaPlayer()
-        self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
+        # self.click = QMediaPlayer()
+        # self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
         self.music = threading.Thread(target=self.loop)
-        self.haptic_flag = 0
+        # self.haptic_flag = 0
         self.music.daemon = True
         self.music.start()
 
@@ -1207,9 +1207,32 @@ class UI():
                 if self.flag == 0:
                     self.Player.play()
 
-            if self.haptic_flag == 1:
-                self.click.play()
-                self.haptic_flag = 0
+            # if self.haptic_flag == 1:
+            #     self.click.play()
+            #     self.haptic_flag = 0
+
+###################################################################################
+###################################################################################
+
+class KeyboardUI():
+    def __init__(self):
+        self.kbui = QStackedWidget()
+        self.kbui.setStyleSheet(
+                                """QStackedWidget
+                                    {
+                                    background-color: rgb(35, 35, 35);
+                                    border-radius:15px;
+                                    }"""
+                                )
+        self.kbui.setGeometry(640, 790, 600, 375)
+        self.kbui.setWindowFlags(Qt.FramelessWindowHint)
+        self.kbipW = KBIPWindow()
+        self.alpW = AlphabetsWindow()
+        self.nsW = NumbersandSymbolsWindow()
+        self.npW = NumpadWindow()
+        self.kbui.addWidget(self.alpW)
+        self.kbui.addWidget(self.nsW)
+        self.kbui.addWidget(self.npW)
 
 ###################################################################################
 ###################################################################################
@@ -1240,23 +1263,7 @@ click_sound = 'Sounds/kbclick.wav'
 # Application
 
 app = QApplication(sys.argv)
-kbui = QStackedWidget()
-kbui.setWindowFlag(Qt.FramelessWindowHint)
-kbui.setStyleSheet(
-    """QStackedWidget
-                        {
-                        background-color: rgb(35, 35, 35);
-                        border-radius:15px;
-                    }"""
-)
-kbui.setGeometry(640, 790, 600, 375)
-kbipW = KBIPWindow()
-alpW = AlphabetsWindow()
-nsW = NumbersandSymbolsWindow()
-npW = NumpadWindow()
-kbui.addWidget(alpW)
-kbui.addWidget(nsW)
-kbui.addWidget(npW)
+KB = KeyboardUI()
 ui = UI()
 app.exec_()
 
