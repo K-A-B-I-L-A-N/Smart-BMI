@@ -36,7 +36,7 @@
    <widget class="QPushButton" name="Admin_bt">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>330</y>
       <width>101</width>
       <height>41</height>
@@ -120,7 +120,7 @@
    <widget class="QPushButton" name="Cancel_bt">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>310</x>
       <y>560</y>
       <width>100</width>
       <height>40</height>
@@ -175,7 +175,17 @@
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(199, 255, 241);</string>
+     <string notr="true">QPushButton {
+	color: rgb(33, 33, 33);
+	background-color: rgb(175, 175, 175);
+border-radius:5px;
+}
+
+QPushButton:focus{
+	border:2px solid;
+	border-color : black;
+}
+</string>
     </property>
     <property name="text">
      <string>Back</string>
