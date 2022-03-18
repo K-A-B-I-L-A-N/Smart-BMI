@@ -5,7 +5,7 @@ import time
 import serial
 import threading
 import serial.tools.list_ports
-from PyQt5 import uic,QtGui
+from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -40,7 +40,10 @@ class ImageAdDisplayWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == 65:
             self.mediaPlayer.stop()
-            ui.play_insertcoin()
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(insertcoin)
+            else:
+                ui.setandplay_bgm(insertcoin_tamil)
             ui.widget.setCurrentWidget(ui.InsertW)
 
 
@@ -78,7 +81,10 @@ class VideoAdDisplayWindow(QMainWindow):
             self.filename = self.clips[0]
             self.mediaPlayer.stop()
             self.flag = 0
-            ui.play_insertcoin()
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(insertcoin)
+            else:
+                ui.setandplay_bgm(insertcoin_tamil)
             ui.widget.setCurrentWidget(ui.InsertW)
 
     def video_run(self):
@@ -112,13 +118,18 @@ class InsertWindow(QMainWindow):
             reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
-                ui.play_background()
+                ui.setandplay_bgm(background)
                 ui.widget.setCurrentWidget(ui.bmiW)
                 ui.bmiW.countdown()
+            
+            if reply == QMessageBox.No:
+                ui.setandplay_bgm(background)
+                ui.widget.setCurrentWidget(ui.bmiwwdW)
+                ui.bmiwwdW.countdown()
 
         if event.key() == 83:
             ui.mmW.setFocus()
-            ui.play_background()
+            ui.setandplay_bgm(background)
             ui.widget.setCurrentWidget(ui.mmW)
 
 #############################################################################
@@ -137,7 +148,7 @@ class MainMenu(QMainWindow):
         self.Login_bt.clicked.connect(self.gotoSettingsOptions)
         self.Cancel_bt.clicked.connect(self.cancel)
         self.Back_bt.clicked.connect(self.gotoAD)
-        self.Password_ip.mousePressEvent = vkbW.kb_disp
+        self.Password_ip.mousePressEvent = KB.alpW.kb_disp
 
     def keyPressEvent(self, event):
         if event.key() == 65:
@@ -171,7 +182,7 @@ class MainMenu(QMainWindow):
         else:
             self.Password_ip.clear()
             msg = QMessageBox()
-            msg.setText("Enter a the correct password")
+            msg.setText("Enter the correct password")
             msg.setIcon(QMessageBox.Information)
             x = msg.exec_()
 
@@ -280,8 +291,8 @@ class WCWindow(QMainWindow):
         super().__init__()
         uic.loadUi("UI Files\WeightCalibrationWindow.ui", self)
         self.Close_bt.clicked.connect(self.gotoSettingsOptions)
-        self.Mc_ip.mousePressEvent = vkpW.kb_disp
-        self.Cc_ip.mousePressEvent = vkpW.kb_disp
+        self.Mc_ip.mousePressEvent = KB.npW.kb_disp
+        self.Cc_ip.mousePressEvent = KB.npW.kb_disp
 
     def gotoSettingsOptions(self):
         ui.widget.setCurrentWidget(ui.OptionsW)
@@ -303,7 +314,7 @@ class HCWindow(QMainWindow):
         self.RefH_ip.setVisible(False)
         self.Close_bt.clicked.connect(self.hide)
         self.Set_bt.clicked.connect(self.show_params)
-        self.RefH_ip.mousePressEvent = vkpW.kb_disp
+        self.RefH_ip.mousePressEvent = KB.npW.kb_disp
 
     def show_params(self):
         self.Ah_lb.setVisible(True)
@@ -339,8 +350,8 @@ class SMSCWindow(QMainWindow):
         self.Close_bt.clicked.connect(self.gotoSettingsOptions)
         self.Mbno_ip.setText(gv.SettingsInputs.value('smscW Mbno'))
         self.Msg_ip.setText(gv.SettingsInputs.value('smscW Msg'))
-        self.Mbno_ip.mousePressEvent = vkpW.kb_disp
-        self.Msg_ip.mousePressEvent = vkbW.kb_disp
+        self.Mbno_ip.mousePressEvent = KB.npW.kb_disp
+        self.Msg_ip.mousePressEvent = KB.alpW.kb_disp
 
     def enable(self):
         self.Dc_bt.setEnabled(True)
@@ -450,12 +461,12 @@ class PSSWindow(QMainWindow):
         self.F_text_rb.clicked.connect(self.showsaved_Fvalues)
         self.Yes_rb.clicked.connect(self.show_footer)
         self.No_rb.clicked.connect(self.hide_footer)
-        self.Hd1_ip.mousePressEvent = vkbW.kb_disp
-        self.Hd2_ip.mousePressEvent = vkbW.kb_disp
-        self.Hd3_ip.mousePressEvent = vkbW.kb_disp
-        self.Ft1_ip.mousePressEvent = vkbW.kb_disp
-        self.Ft2_ip.mousePressEvent = vkbW.kb_disp
-        self.Ft3_ip.mousePressEvent = vkbW.kb_disp
+        self.Hd1_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Hd2_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Hd3_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft1_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft2_ip.mousePressEvent = KB.alpW.kb_disp
+        self.Ft3_ip.mousePressEvent = KB.alpW.kb_disp
         self.setOptions()
 
     def setOptions(self):
@@ -541,8 +552,20 @@ class PSSWindow(QMainWindow):
 
         self.list[3:9] = [self.Hd1_cb.isChecked(), self.Hd2_cb.isChecked(), self.Hd3_cb.isChecked(),
                           self.Ft1_cb.isChecked(), self.Ft2_cb.isChecked(), self.Ft3_cb.isChecked()]
+
         gv.SettingsInputs.setValue('PSS', self.list)
-        self.gotoSettingsOptions()
+
+        if (len(self.Hd1_ip.text()) > 0 and len(self.Hd2_ip.text()) > 0 and len(self.Hd3_ip.text()) > 0
+                and len(self.Ft1_ip.text()) > 0 and len(self.Ft2_ip.text()) > 0 and len(self.Ft3_ip.text()) > 0):
+
+            self.gotoSettingsOptions()
+
+        else:
+
+            msg = QMessageBox()
+            msg.setText("Don't Leave Textfields empty")
+            msg.setIcon(QMessageBox.Information)
+            x = msg.exec_()
 
     def gotoSettingsOptions(self):
         ui.widget.setCurrentWidget(ui.OptionsW)
@@ -612,6 +635,7 @@ class BMI(QMainWindow):
                 "." + self.Ht[len(self.Ht) - int(decode[0]):]
         except:
             self.Ht = "180"
+        
         return self.Ht
 
     def get_weight(self):
@@ -633,21 +657,23 @@ class BMI(QMainWindow):
         return self.Wt
 
     def get_bmi(self):
-        self.BMindex = str("{:.2f}".format(
+        self.BMIindex = str("{:.2f}".format(
             float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+        
+        print(self.BMIindex)
 
-        if self.BMindex < "20":
+        if self.BMIindex < "20":
             self.needle_1.setHidden(False)
-        elif self.BMindex >= "20" and self.BMindex < "25":
+        elif self.BMIindex >= "20" and self.BMIindex < "25":
             self.needle_2.setHidden(False)
-        elif self.BMindex >= "25" and self.BMindex < "30":
+        elif self.BMIindex >= "25" and self.BMIindex < "30":
             self.needle_3.setHidden(False)
-        elif self.BMindex >= "30" and self.BMindex < "35":
+        elif self.BMIindex >= "30" and self.BMIindex < "35":
             self.needle_4.setHidden(False)
         else:
             self.needle_5.setHidden(False)
 
-        return self.BMindex
+        return self.BMIindex
 
     def countdown(self):
         self.timer = QTimer()
@@ -663,7 +689,10 @@ class BMI(QMainWindow):
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
             else:
-                ui.play_printm()
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.setandplay_bgm(printM)
+                else:
+                    ui.setandplay_bgm(printM_tamil)
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -672,6 +701,102 @@ class BMI(QMainWindow):
 
 ##################################################################################
 
+
+class BMIWWD(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(R"UI Files\BMIWWDWindow.ui", self)
+        self.needle_1.setHidden(True)
+        self.needle_2.setHidden(True)
+        self.needle_3.setHidden(True)
+        self.needle_4.setHidden(True)
+        self.needle_5.setHidden(True)
+        self.secs = 10
+        self.height.setText(self.get_height())
+        self.get_weight()
+        self.Result.setText(self.get_bmi())
+
+    def get_height(self):
+        # ports = serial.tools.list_ports.comports()
+        # print(ports[0])
+        try:
+            ip = serial.Serial(port="COM6", baudrate=19200, bytesize=8, parity=serial.PARITY_NONE,
+                               stopbits=serial.STOPBITS_ONE)
+
+            self.Ht = str(ip.read(13))
+            self.Ht = self.Ht[6:13]
+            decode = self.Ht.split("-")
+            self.Ht = decode[1]
+            self.Ht = self.Ht[:len(self.Ht) - int(decode[0])] + \
+                "." + self.Ht[len(self.Ht) - int(decode[0]):]
+        except:
+            self.Ht = "180"
+        
+        return self.Ht
+
+    def get_weight(self):
+        # ports = serial.tools.list_ports.comports()
+        # print(ports[0])
+        try:
+            ip = serial.Serial(port="COM6", baudrate=19200, bytesize=8, parity=serial.PARITY_NONE,
+                               stopbits=serial.STOPBITS_ONE)
+            self.Wt = str(ip.read(13))
+            self.Wt = self.Wt[6:13]
+            decode = self.Wt.split("-")  # [decimal places from right , value]
+            self.Wt = decode[1]
+            self.Wt = self.Wt[:len(self.Wt) - int(decode[0])] + \
+                "." + self.Wt[len(self.Wt) - int(decode[0]):]
+
+        except:
+            self.Wt = "75"
+
+        return self.Wt
+
+    def get_bmi(self):
+        self.BMIindex = str("{:.2f}".format(
+            float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+        
+        print(self.BMIindex)
+
+        if self.BMIindex < "20":
+            self.needle_1.setHidden(False)
+        elif self.BMIindex >= "20" and self.BMIindex < "25":
+            self.needle_2.setHidden(False)
+        elif self.BMIindex >= "25" and self.BMIindex < "30":
+            self.needle_3.setHidden(False)
+        elif self.BMIindex >= "30" and self.BMIindex < "35":
+            self.needle_4.setHidden(False)
+        else:
+            self.needle_5.setHidden(False)
+
+        return self.BMIindex
+
+    def countdown(self):
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.displayTime)
+        self.timer.start(1000)
+
+    def displayTime(self):
+        if self.secs == 0:
+            self.lb_timer_bmi.setText("")
+            self.secs = 10
+            self.timer.stop()
+            if gv.SettingsInputs.value('Print or SMS') == 'Print and SMS':
+                ui.widget.setCurrentWidget(ui.posW)
+                ui.posW.countdown()
+            else:
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.setandplay_bgm(printM)
+                else:
+                    ui.setandplay_bgm(printM_tamil)
+                ui.widget.setCurrentWidget(ui.gdapW)
+                ui.gdapW.countdown()
+        else:
+            self.lb_timer_bmi.setText(str(self.secs))
+            self.secs -= 1
+
+
+##################################################################################
 
 class POSWindow(QMainWindow):
     def __init__(self):
@@ -685,7 +810,10 @@ class POSWindow(QMainWindow):
         self.timer_lb.setText("")
         self.timer.stop()
         self.secs = 10
-        ui.play_printm()
+        if gv.SettingsInputs.value('Language') == 'English':
+            ui.setandplay_bgm(printM)
+        else:
+            ui.setandplay_bgm(printM_tamil)
         ui.widget.setCurrentWidget(ui.gdapW)
         ui.gdapW.countdown()
 
@@ -717,7 +845,7 @@ class SendSMSWindow(QMainWindow):
         uic.loadUi("UI Files\SendSMSWindow.ui", self)
         self.Back_bt.clicked.connect(self.gotoPOSWindow)
         self.Send_bt.clicked.connect(self.gotogdW)
-        self.Mbno_ip.mousePressEvent = vkpW.kb_disp
+        self.Mbno_ip.mousePressEvent = KB.npW.kb_disp
 
     def gotoPOSWindow(self):
         self.Mbno_ip.clear()
@@ -727,7 +855,10 @@ class SendSMSWindow(QMainWindow):
     def gotogdW(self):
         if len(self.Mbno_ip.text()) == 10:
             self.Mbno_ip.clear()
-            ui.play_sms()
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(sms)
+            else:
+                ui.setandplay_bgm(sms_tamil)
             ui.widget.setCurrentWidget(ui.gdW)
             ui.gdW.countdown()
 
@@ -746,7 +877,7 @@ class GetDownAPWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownAPWindow.ui", self)
-        self.secs = 4
+        self.secs = 7
 
     def countdown(self):
         self.timer = QTimer()
@@ -756,7 +887,7 @@ class GetDownAPWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 4
+            self.secs = 7
             ui.stop_bgm()
             ui.run_ad()
         else:
@@ -769,7 +900,7 @@ class GetDownWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownWindow.ui", self)
-        self.secs = 5
+        self.secs = 7
 
     def countdown(self):
         self.timer = QTimer()
@@ -779,7 +910,7 @@ class GetDownWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 5
+            self.secs = 7
             ui.stop_bgm()
             ui.run_ad()
         else:
@@ -797,36 +928,49 @@ class NoPaperWindow(QMainWindow):
 ###################################################################################
 
 
-class VirtualKeyboardWindow(QWidget):
+class KBIPWindow(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(R"UI Files\VirtualKeyboardWindow.ui", self)
-        self.resize(600, 512)
+        uic.loadUi("UI Files\KeyboardInputWindow.ui", self)
         self.setWindowFlag(Qt.FramelessWindowHint)
-        self.move(640, 652)
+        self.move(640, 715)
+        self.clr_bt.clicked.connect(self.clear_text)
+        self.clr_bt.setVisible(False)
+        self.kbip.textChanged.connect(self.show_clr_bt)
+
+    def clear_text(self):
+        self.kbip.clear()
+
+    def show_clr_bt(self):
+
+        if len(self.kbip.text()) == 0:
+            self.clr_bt.setVisible(False)
+        else:
+            self.clr_bt.setVisible(True)
+
+###################################################################################
+
+
+class AlphabetsWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("UI Files\AlphabetWindow.ui", self)
         self.lower_flag = 1
         self.signalmapper = QSignalMapper()
         self.signalmapper.mapped[int].connect(self.buttonClicked)
         self.names = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                      'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                      '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.', '-', ':',
-                      '@', '+']
+                      'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
         self.buttons = [self.a_bt, self.b_bt, self.c_bt, self.d_bt, self.e_bt, self.f_bt, self.g_bt, self.h_bt,
                         self.i_bt, self.j_bt, self.k_bt, self.l_bt, self.m_bt, self.n_bt, self.o_bt, self.p_bt,
                         self.q_bt, self.r_bt, self.s_bt, self.t_bt, self.u_bt, self.v_bt, self.w_bt, self.x_bt,
-                        self.y_bt, self.z_bt, self.one_bt, self.two_bt, self.three_bt, self.four_bt, self.five_bt,
-                        self.six_bt, self.seven_bt, self.eight_bt, self.nine_bt, self.zero_bt, self.dot_bt,
-                        self.hyphen_bt, self.colon_bt, self.at_bt, self.plus_bt]
+                        self.y_bt, self.z_bt]
         # clicked functions
 
         for button, name in zip(self.buttons, self.names):
-            button.setFont(QtGui.QFont("Proxima Nova", 18))
             button.KEY_CHAR = ord(name)
             button.clicked.connect(self.signalmapper.map)
             self.signalmapper.setMapping(button, button.KEY_CHAR)
-
-        self.clr_bt.clicked.connect(self.signalmapper.map)
-        self.signalmapper.setMapping(self.clr_bt, Qt.Key_Clear)
 
         self.caps_bt.clicked.connect(self.signalmapper.map)
         self.signalmapper.setMapping(self.caps_bt, Qt.Key_CapsLock)
@@ -840,34 +984,30 @@ class VirtualKeyboardWindow(QWidget):
         self.done_bt.clicked.connect(self.signalmapper.map)
         self.signalmapper.setMapping(self.done_bt, Qt.Key_Home)
 
-        # self.kbip.setFocus()
+        self.ns_bt.clicked.connect(self.show_nsw)
+
+    def show_nsw(self):
+        KB.kbui.setCurrentWidget(KB.nsW)
 
     def buttonClicked(self, char_ord):
-        # ui.click.play()
-        # time.sleep(0.5)
-        ui.haptic_flag = 1
-        txt = self.kbip.text()
+        # ui.haptic_flag = 1
+        txt = KB.kbipW.kbip.text()
 
-        if char_ord == Qt.Key_Clear:
-            txt = ''
-
-        elif char_ord == Qt.Key_CapsLock:
-            if self.caps_bt.text() == 'Caps Off':
-
-                self.caps_bt.setText("Caps On")
-                for button in self.buttons:
-                    button.setText(button.text().upper())
-
-            else:
-                self.caps_bt.setText('Caps Off')
-                for button in self.buttons:
-                    button.setText(button.text().lower())
+        if char_ord == Qt.Key_CapsLock:
 
             if self.lower_flag == 0:
                 self.lower_flag = 1
+                self.caps_bt.setIcon(
+                    QIcon(QPixmap("designs\icons\caps off.png")))
+                for button in self.buttons:
+                    button.setText(button.text().lower())
 
             else:
                 self.lower_flag = 0
+                self.caps_bt.setIcon(
+                    QIcon(QPixmap("designs\icons\caps on.png")))
+                for button in self.buttons:
+                    button.setText(button.text().upper())
 
         elif char_ord == Qt.Key_Backspace:
             txt = txt[:-1]
@@ -876,8 +1016,8 @@ class VirtualKeyboardWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-
-            self.close()
+            KB.kbui.hide()
+            KB.kbipW.hide()
             self.LE.setText(txt)
 
         else:
@@ -889,78 +1029,74 @@ class VirtualKeyboardWindow(QWidget):
             except:
                 pass
 
-        self.kbip.setText(txt)
-        self.kbip.setFocus()
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.kbip.setFocus()
 
     def kb_disp(self, event):
 
+        self.lower_flag = 1
+        self.caps_bt.setIcon(QIcon(QPixmap("designs\icons\caps off.png")))
+        for button in self.buttons:
+            button.setText(button.text().lower())
+
+        KB.kbui.setCurrentWidget(KB.alpW)
+        KB.kbui.hide()
+        KB.kbipW.hide()
+        KB.kbui.show()
+        KB.kbipW.show()
+        KB.kbipW.kbip.setMaxLength(32767)
+        KB.kbipW.kbip.setEchoMode(QLineEdit.Normal)
+
         if ui.mmW.Password_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.mmW.Password_ip.text())
-            self.show()
+            KB.kbipW.kbip.setEchoMode(QLineEdit.Password)    
+            KB.kbipW.kbip.setText(ui.mmW.Password_ip.text())
             self.LE = ui.mmW.Password_ip
 
         elif ui.smscW.Msg_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.smscW.Msg_ip.toPlainText())
-            self.show()
+            KB.kbipW.kbip.setText(ui.smscW.Msg_ip.toPlainText())
             self.LE = ui.smscW.Msg_ip
 
         elif ui.pssW.Hd1_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Hd1_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Hd1_ip.text())
             self.LE = ui.pssW.Hd1_ip
 
         elif ui.pssW.Hd2_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Hd2_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Hd2_ip.text())
             self.LE = ui.pssW.Hd2_ip
 
         elif ui.pssW.Hd3_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Hd3_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Hd3_ip.text())
             self.LE = ui.pssW.Hd3_ip
 
         elif ui.pssW.Ft1_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Ft1_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Ft1_ip.text())
             self.LE = ui.pssW.Ft1_ip
 
         elif ui.pssW.Ft2_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Ft2_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Ft2_ip.text())
             self.LE = ui.pssW.Ft2_ip
 
         elif ui.pssW.Ft3_ip.hasFocus():
-            self.hide()
-            self.kbip.setText(ui.pssW.Ft3_ip.text())
-            self.show()
+            KB.kbipW.kbip.setText(ui.pssW.Ft3_ip.text())
             self.LE = ui.pssW.Ft3_ip
 
 ###################################################################################
 
 
-class VirtualKeypadWindow(QWidget):
+class NumpadWindow(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi("UI Files\VirtualKeypadWindow.ui", self)
-        self.resize(600, 512)
-        self.LE = QLineEdit()
-        self.kpip.setValidator(QIntValidator())
+        uic.loadUi(R"UI Files\NumpadWindow.ui", self)
         self.setWindowFlag(Qt.FramelessWindowHint)
-        self.move(640, 652)
         self.signalmapper = QSignalMapper()
         self.signalmapper.mapped[int].connect(self.buttonClicked)
 
-        self.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
+        self.names = ['1', '2', '3', '4', '5', '6',
+                      '7', '8', '9', '0', '.', ',', '/', '-', '*']
         self.buttons = [self.one_bt, self.two_bt, self.three_bt, self.four_bt, self.five_bt,
                         self.six_bt, self.seven_bt, self.eight_bt, self.nine_bt, self.zero_bt,
-                        self.dot_bt]
+                        self.dot_bt, self.comma_bt, self.fslash_bt, self.hyphen_bt, self.star_bt]
 
         # clicked functions
         for button, name in zip(self.buttons, self.names):
@@ -968,70 +1104,130 @@ class VirtualKeypadWindow(QWidget):
             button.clicked.connect(self.signalmapper.map)
             self.signalmapper.setMapping(button, button.KEY_CHAR)
 
-        self.clr_bt.clicked.connect(self.signalmapper.map)
-        self.signalmapper.setMapping(self.clr_bt, Qt.Key_Clear)
-
         self.bckspc_bt.clicked.connect(self.signalmapper.map)
         self.signalmapper.setMapping(self.bckspc_bt, Qt.Key_Backspace)
+
+        self.spc_bt.clicked.connect(self.signalmapper.map)
+        self.signalmapper.setMapping(self.spc_bt, Qt.Key_Space)
 
         self.done_bt.clicked.connect(self.signalmapper.map)
         self.signalmapper.setMapping(self.done_bt, Qt.Key_Home)
 
     def buttonClicked(self, char_ord):
-        txt = self.kpip.text()
+        # ui.haptic_flag = 1
+        txt = KB.kbipW.kbip.text()
 
-        if char_ord == Qt.Key_Clear:
-            txt = ''
-
-        elif char_ord == Qt.Key_Backspace:
+        if char_ord == Qt.Key_Backspace:
             txt = txt[:-1]
 
+        elif char_ord == Qt.Key_Space:
+            txt += ' '
+
         elif char_ord == Qt.Key_Home:
-            self.close()
+            KB.kbui.hide()
+            KB.kbipW.hide()
             self.LE.setText(txt)
 
         else:
             txt += chr(char_ord)
 
-        self.kpip.setText(txt)
-        self.kpip.setFocus()
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setFocus()
 
     def kb_disp(self, event):
 
+        KB.kbui.setCurrentWidget(KB.npW)
+        KB.kbui.hide()
+        KB.kbipW.hide()
+        KB.kbui.show()
+        KB.kbipW.show()
+        KB.kbipW.kbip.setMaxLength(32767)
+        KB.kbipW.kbip.setEchoMode(QLineEdit.Normal)
+
+
         if ui.wcW.Mc_ip.hasFocus():
-            self.hide()
-            self.kpip.setText(ui.wcW.Mc_ip.text())
-            self.kpip.setMaxLength(32767)
-            self.show()
+            KB.kbipW.kbip.setText(ui.wcW.Mc_ip.text())
             self.LE = ui.wcW.Mc_ip
 
         elif ui.wcW.Cc_ip.hasFocus():
-            self.hide()
-            self.kpip.setText(ui.wcW.Cc_ip.text())
-            self.kpip.setMaxLength(32767)
-            self.show()
+            KB.kbipW.kbip.setText(ui.wcW.Cc_ip.text())
             self.LE = ui.wcW.Cc_ip
 
         elif ui.hcW.RefH_ip.hasFocus():
-            self.hide()
-            self.kpip.setText(ui.hcW.RefH_ip.text())
-            self.kpip.setMaxLength(32767)
-            self.show()
+            KB.kbipW.kbip.setText(ui.hcW.RefH_ip.text())
             self.LE = ui.hcW.RefH_ip
 
         elif ui.smscW.Mbno_ip.hasFocus():
-            self.hide()
-            self.kpip.setText(ui.smscW.Mbno_ip.text())
-            self.kpip.setMaxLength(10)
-            self.show()
+            KB.kbipW.kbip.setText(ui.smscW.Mbno_ip.text())
+            KB.kbipW.kbip.setMaxLength(10)
             self.LE = ui.smscW.Mbno_ip
 
         elif ui.ssmsW.Mbno_ip.hasFocus():
-            self.hide()
-            self.kpip.setText(ui.ssmsW.Mbno_ip.text())
-            self.kpip.setMaxLength(10)
-            self.show()
+            KB.kbipW.kbip.setText(ui.ssmsW.Mbno_ip.text())
+            KB.kbipW.kbip.setMaxLength(10)
             self.LE = ui.ssmsW.Mbno_ip
+
+#############################################################################################
+
+
+class NumbersandSymbolsWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(R"UI Files\NumberandSymbolsWindow.ui", self)
+        self.signalmapper = QSignalMapper()
+        self.signalmapper.mapped[int].connect(self.buttonClicked)
+        self.names = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '/',
+                      ':', '~', '(', ')', '$', '&', "'", '"', '+', '@', '.', ',',
+                      '?', '!', '#', '%', '*']
+
+        self.buttons = [self.one_bt, self.two_bt, self.three_bt, self.four_bt, self.five_bt, self.six_bt, self.seven_bt, self.eight_bt,
+                        self.nine_bt, self.zero_bt, self.hyphen_bt, self.fslash_bt, self.colon_bt, self.tilde_bt, self.ob_bt, self.cb_bt,
+                        self.dollar_bt, self.and_bt, self.sapostrophe_bt, self.dapostrophe_bt, self.plus_bt, self.at_bt, self.dot_bt,
+                        self.comma_bt, self.qmark_bt, self.excmark_bt, self.hash_bt, self.percentage_bt, self.star_bt]
+        # clicked functions
+
+        for button, name in zip(self.buttons, self.names):
+            button.KEY_CHAR = ord(name)
+            button.clicked.connect(self.signalmapper.map)
+            self.signalmapper.setMapping(button, button.KEY_CHAR)
+
+        self.bckspc_bt.clicked.connect(self.signalmapper.map)
+        self.signalmapper.setMapping(self.bckspc_bt, Qt.Key_Backspace)
+
+        self.spc_bt.clicked.connect(self.signalmapper.map)
+        self.signalmapper.setMapping(self.spc_bt, Qt.Key_Space)
+
+        self.done_bt.clicked.connect(self.signalmapper.map)
+        self.signalmapper.setMapping(self.done_bt, Qt.Key_Home)
+
+        self.abc_bt.clicked.connect(self.show_abc)
+
+    def show_abc(self):
+        KB.kbui.setCurrentWidget(KB.alpW)
+
+    def buttonClicked(self, char_ord):
+        # ui.haptic_flag = 1
+
+        txt = KB.kbipW.kbip.text()
+
+        if char_ord == Qt.Key_Backspace:
+            txt = txt[:-1]
+
+        elif char_ord == Qt.Key_Space:
+            txt += ' '
+
+        elif char_ord == Qt.Key_Home:
+            KB.kbui.hide()
+            KB.kbipW.hide()
+            KB.alpW.LE.setText(txt)
+
+        else:
+            txt += chr(char_ord)
+
+        KB.kbipW.kbip.setText(txt)
+        KB.kbipW.activateWindow()
+        KB.kbipW.kbip.setFocus()
 
 ###################################################################################
 ###################################################################################
@@ -1054,6 +1250,7 @@ class UI():
         self.dW = DiagWindow()
         self.pssW = PSSWindow()
         self.bmiW = BMI()
+        self.bmiwwdW = BMIWWD()
         self.posW = POSWindow()
         self.ssmsW = SendSMSWindow()
         self.imgAdW = ImageAdDisplayWindow()
@@ -1066,7 +1263,7 @@ class UI():
                              self.OptionsW, self.setupW, self.wcW, self.hcW,
                              self.smscW, self.rW, self.dW, self.pssW, self.bmiW,
                              self.posW, self.ssmsW, self.imgAdW, self.gdapW, self.gdW,
-                             self.npW]
+                             self.npW, self.bmiwwdW]
 
         for i in self.widgets_list:
             self.widget.addWidget(i)
@@ -1074,20 +1271,18 @@ class UI():
         # set width and height
 
         self.widget.setGeometry(640, 140, 600, 1024)
-        self.run_ad()
         self.widget.show()
+        self.run_ad()
 
         #  BGM thread
         self.flag = 1
         self.Player = QMediaPlayer()
-        self.click = QMediaPlayer()
-        self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
+        # self.click = QMediaPlayer()
+        # self.click.setMedia(QMediaContent(QUrl.fromLocalFile(click_sound)))
         self.music = threading.Thread(target=self.loop)
-        self.haptic = threading.Thread(target=self.play_click)
-        self.haptic_flag = 0
+        # self.haptic_flag = 0
         self.music.daemon = True
         self.music.start()
-        self.haptic.start()
 
     def run_ad(self):
         if gv.SettingsInputs.value('Screensaver') == 'Videos':
@@ -1099,23 +1294,8 @@ class UI():
             self.widget.setCurrentWidget(self.imgAdW)
             self.imgAdW.mediaPlayer.play()
 
-    def play_background(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(background)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_insertcoin(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(insertcoin)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_printm(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(printM)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_sms(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(sms)))
+    def setandplay_bgm(self, filename):
+        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(filename)))
         self.stop_bgm()
         self.play_bgm()
 
@@ -1134,11 +1314,33 @@ class UI():
                 if self.flag == 0:
                     self.Player.play()
 
-    def play_click(self):
-        while True:
-            if self.haptic_flag == 1:
-                self.click.play()
-                self.haptic_flag = 0
+            # if self.haptic_flag == 1:
+            #     self.click.play()
+            #     self.haptic_flag = 0
+
+###################################################################################
+###################################################################################
+
+
+class KeyboardUI():
+    def __init__(self):
+        self.kbui = QStackedWidget()
+        self.kbui.setStyleSheet(
+            """QStackedWidget
+                                    {
+                                    background-color: rgb(35, 35, 35);
+                                    border-radius:15px;
+                                    }"""
+        )
+        self.kbui.setGeometry(640, 790, 600, 375)
+        self.kbui.setWindowFlag(Qt.FramelessWindowHint)
+        self.kbipW = KBIPWindow()
+        self.alpW = AlphabetsWindow()
+        self.nsW = NumbersandSymbolsWindow()
+        self.npW = NumpadWindow()
+        self.kbui.addWidget(self.alpW)
+        self.kbui.addWidget(self.nsW)
+        self.kbui.addWidget(self.npW)
 
 ###################################################################################
 ###################################################################################
@@ -1147,29 +1349,30 @@ class UI():
 class GV():
     def __init__(self):
         self.getSettingsValues()
-        os.system('python img2SS.py')
 
     def getSettingsValues(self):
         self.SettingsInputs = QSettings('Smart BMI', 'SettingsWindow')
 
+###################################################################################
+###################################################################################
+
+
+# os.system("python img2SS.py")
+
+[background, insertcoin, printM, sms,
+ click_sound, insertcoin_tamil,
+  printM_tamil, sms_tamil] = ['Sounds/Background.wav', 'Sounds/InsertCoin.mp3','Sounds/Print.mp3',
+                                'Sounds/sms.mp3', 'Sounds/kbclick.wav', 'Sounds\insertcoin_tamil.mp3',
+                                'Sounds\Print_tamil.mp3', 'Sounds\sms_tamil.mp3']
+
 gv = GV()
-os.system("python img2SS.py")
 
 ###################################################################################
-###################################################################################
-
-background = 'Sounds/Background.wav'
-insertcoin = 'Sounds/InsertCoin.mp3'
-printM = 'Sounds/Print.mp3'
-sms = 'Sounds/sms.mp3'
-click_sound = 'Sounds/kbclick.wav'
-
 ###################################################################################
 # Application
 
 app = QApplication(sys.argv)
-vkbW = VirtualKeyboardWindow()
-vkpW = VirtualKeypadWindow()
+KB = KeyboardUI()
 ui = UI()
 app.exec_()
 

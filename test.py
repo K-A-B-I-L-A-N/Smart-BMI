@@ -5,7 +5,7 @@ import time
 import serial
 import threading
 import serial.tools.list_ports
-from PyQt5 import uic, QtGui
+from PyQt5 import uic
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
@@ -40,7 +40,10 @@ class ImageAdDisplayWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == 65:
             self.mediaPlayer.stop()
-            ui.setandplay_bgm(insertcoin)
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(insertcoin)
+            else:
+                ui.setandplay_bgm(insertcoin_tamil)
             ui.widget.setCurrentWidget(ui.InsertW)
 
 
@@ -78,7 +81,10 @@ class VideoAdDisplayWindow(QMainWindow):
             self.filename = self.clips[0]
             self.mediaPlayer.stop()
             self.flag = 0
-            ui.setandplay_bgm(insertcoin)
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(insertcoin)
+            else:
+                ui.setandplay_bgm(insertcoin_tamil)
             ui.widget.setCurrentWidget(ui.InsertW)
 
     def video_run(self):
@@ -683,7 +689,10 @@ class BMI(QMainWindow):
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
             else:
-                ui.setandplay_bgm(printM)
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.setandplay_bgm(printM)
+                else:
+                    ui.setandplay_bgm(printM_tamil)
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -776,7 +785,10 @@ class BMIWWD(QMainWindow):
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
             else:
-                ui.setandplay_bgm(printM)
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.setandplay_bgm(printM)
+                else:
+                    ui.setandplay_bgm(printM_tamil)
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -798,7 +810,10 @@ class POSWindow(QMainWindow):
         self.timer_lb.setText("")
         self.timer.stop()
         self.secs = 10
-        ui.setandplay_bgm(printM)
+        if gv.SettingsInputs.value('Language') == 'English':
+            ui.setandplay_bgm(printM)
+        else:
+            ui.setandplay_bgm(printM_tamil)
         ui.widget.setCurrentWidget(ui.gdapW)
         ui.gdapW.countdown()
 
@@ -840,7 +855,10 @@ class SendSMSWindow(QMainWindow):
     def gotogdW(self):
         if len(self.Mbno_ip.text()) == 10:
             self.Mbno_ip.clear()
-            ui.setandplay_bgm(sms)
+            if gv.SettingsInputs.value('Language') == 'English':
+                ui.setandplay_bgm(sms)
+            else:
+                ui.setandplay_bgm(sms_tamil)
             ui.widget.setCurrentWidget(ui.gdW)
             ui.gdW.countdown()
 
@@ -859,7 +877,7 @@ class GetDownAPWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownAPWindow.ui", self)
-        self.secs = 4
+        self.secs = 7
 
     def countdown(self):
         self.timer = QTimer()
@@ -869,7 +887,7 @@ class GetDownAPWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 4
+            self.secs = 7
             ui.stop_bgm()
             ui.run_ad()
         else:
@@ -882,7 +900,7 @@ class GetDownWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownWindow.ui", self)
-        self.secs = 5
+        self.secs = 7
 
     def countdown(self):
         self.timer = QTimer()
@@ -892,7 +910,7 @@ class GetDownWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 5
+            self.secs = 7
             ui.stop_bgm()
             ui.run_ad()
         else:
@@ -1125,6 +1143,8 @@ class NumpadWindow(QWidget):
         KB.kbui.show()
         KB.kbipW.show()
         KB.kbipW.kbip.setMaxLength(32767)
+        KB.kbipW.kbip.setEchoMode(QLineEdit.Normal)
+
 
         if ui.wcW.Mc_ip.hasFocus():
             KB.kbipW.kbip.setText(ui.wcW.Mc_ip.text())
@@ -1338,8 +1358,13 @@ class GV():
 
 
 # os.system("python img2SS.py")
-background, insertcoin, printM, sms, click_sound = ['Sounds/Background.wav', 'Sounds/InsertCoin.mp3',
-                                                    'Sounds/Print.mp3', 'Sounds/sms.mp3', 'Sounds/kbclick.wav']
+
+[background, insertcoin, printM, sms,
+ click_sound, insertcoin_tamil,
+  printM_tamil, sms_tamil] = ['Sounds/Background.wav', 'Sounds/InsertCoin.mp3','Sounds/Print.mp3',
+                                'Sounds/sms.mp3', 'Sounds/kbclick.wav', 'Sounds\insertcoin_tamil.mp3',
+                                'Sounds\Print_tamil.mp3', 'Sounds\sms_tamil.mp3']
+
 gv = GV()
 
 ###################################################################################
