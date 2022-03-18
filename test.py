@@ -1104,10 +1104,6 @@ class NumbersandSymbolsWindow(QWidget):
         KB.kbipW.kbip.setText(txt)
         KB.kbipW.kbip.setFocus()
 
-
-###################################################################################
-
-
 ###################################################################################
 ###################################################################################
 
@@ -1214,18 +1210,19 @@ class UI():
 ###################################################################################
 ###################################################################################
 
+
 class KeyboardUI():
     def __init__(self):
         self.kbui = QStackedWidget()
         self.kbui.setStyleSheet(
-                                """QStackedWidget
+            """QStackedWidget
                                     {
                                     background-color: rgb(35, 35, 35);
                                     border-radius:15px;
                                     }"""
-                                )
+        )
         self.kbui.setGeometry(640, 790, 600, 375)
-        self.kbui.setWindowFlags(Qt.FramelessWindowHint)
+        self.kbui.setWindowFlag(Qt.FramelessWindowHint)
         self.kbipW = KBIPWindow()
         self.alpW = AlphabetsWindow()
         self.nsW = NumbersandSymbolsWindow()
@@ -1241,24 +1238,20 @@ class KeyboardUI():
 class GV():
     def __init__(self):
         self.getSettingsValues()
-        os.system('python img2SS.py')
 
     def getSettingsValues(self):
         self.SettingsInputs = QSettings('Smart BMI', 'SettingsWindow')
 
+###################################################################################
+###################################################################################
 
+
+# os.system("python img2SS.py")
+background, insertcoin, printM, sms, click_sound = ['Sounds/Background.wav', 'Sounds/InsertCoin.mp3',
+                                                    'Sounds/Print.mp3', 'Sounds/sms.mp3', 'Sounds/kbclick.wav']
 gv = GV()
-os.system("python img2SS.py")
 
 ###################################################################################
-###################################################################################
-
-background = 'Sounds/Background.wav'
-insertcoin = 'Sounds/InsertCoin.mp3'
-printM = 'Sounds/Print.mp3'
-sms = 'Sounds/sms.mp3'
-click_sound = 'Sounds/kbclick.wav'
-
 ###################################################################################
 # Application
 
