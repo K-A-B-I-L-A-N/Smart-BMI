@@ -115,6 +115,11 @@ class InsertWindow(QMainWindow):
                 ui.setandplay_bgm(background)
                 ui.widget.setCurrentWidget(ui.bmiW)
                 ui.bmiW.countdown()
+            
+            if reply == QMessageBox.No:
+                ui.setandplay_bgm(background)
+                ui.widget.setCurrentWidget(ui.bmiwwdW)
+                ui.bmiwwdW.countdown()
 
         if event.key() == 83:
             ui.mmW.setFocus()
@@ -624,6 +629,7 @@ class BMI(QMainWindow):
                 "." + self.Ht[len(self.Ht) - int(decode[0]):]
         except:
             self.Ht = "180"
+        
         return self.Ht
 
     def get_weight(self):
@@ -645,21 +651,23 @@ class BMI(QMainWindow):
         return self.Wt
 
     def get_bmi(self):
-        self.BMindex = str("{:.2f}".format(
+        self.BMIindex = str("{:.2f}".format(
             float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+        
+        print(self.BMIindex)
 
-        if self.BMindex < "20":
+        if self.BMIindex < "20":
             self.needle_1.setHidden(False)
-        elif self.BMindex >= "20" and self.BMindex < "25":
+        elif self.BMIindex >= "20" and self.BMIindex < "25":
             self.needle_2.setHidden(False)
-        elif self.BMindex >= "25" and self.BMindex < "30":
+        elif self.BMIindex >= "25" and self.BMIindex < "30":
             self.needle_3.setHidden(False)
-        elif self.BMindex >= "30" and self.BMindex < "35":
+        elif self.BMIindex >= "30" and self.BMIindex < "35":
             self.needle_4.setHidden(False)
         else:
             self.needle_5.setHidden(False)
 
-        return self.BMindex
+        return self.BMIindex
 
     def countdown(self):
         self.timer = QTimer()
@@ -684,6 +692,99 @@ class BMI(QMainWindow):
 
 ##################################################################################
 
+
+class BMIWWD(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(R"UI Files\BMIWWDWindow.ui", self)
+        self.needle_1.setHidden(True)
+        self.needle_2.setHidden(True)
+        self.needle_3.setHidden(True)
+        self.needle_4.setHidden(True)
+        self.needle_5.setHidden(True)
+        self.secs = 10
+        self.height.setText(self.get_height())
+        self.get_weight()
+        self.Result.setText(self.get_bmi())
+
+    def get_height(self):
+        # ports = serial.tools.list_ports.comports()
+        # print(ports[0])
+        try:
+            ip = serial.Serial(port="COM6", baudrate=19200, bytesize=8, parity=serial.PARITY_NONE,
+                               stopbits=serial.STOPBITS_ONE)
+
+            self.Ht = str(ip.read(13))
+            self.Ht = self.Ht[6:13]
+            decode = self.Ht.split("-")
+            self.Ht = decode[1]
+            self.Ht = self.Ht[:len(self.Ht) - int(decode[0])] + \
+                "." + self.Ht[len(self.Ht) - int(decode[0]):]
+        except:
+            self.Ht = "180"
+        
+        return self.Ht
+
+    def get_weight(self):
+        # ports = serial.tools.list_ports.comports()
+        # print(ports[0])
+        try:
+            ip = serial.Serial(port="COM6", baudrate=19200, bytesize=8, parity=serial.PARITY_NONE,
+                               stopbits=serial.STOPBITS_ONE)
+            self.Wt = str(ip.read(13))
+            self.Wt = self.Wt[6:13]
+            decode = self.Wt.split("-")  # [decimal places from right , value]
+            self.Wt = decode[1]
+            self.Wt = self.Wt[:len(self.Wt) - int(decode[0])] + \
+                "." + self.Wt[len(self.Wt) - int(decode[0]):]
+
+        except:
+            self.Wt = "75"
+
+        return self.Wt
+
+    def get_bmi(self):
+        self.BMIindex = str("{:.2f}".format(
+            float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+        
+        print(self.BMIindex)
+
+        if self.BMIindex < "20":
+            self.needle_1.setHidden(False)
+        elif self.BMIindex >= "20" and self.BMIindex < "25":
+            self.needle_2.setHidden(False)
+        elif self.BMIindex >= "25" and self.BMIindex < "30":
+            self.needle_3.setHidden(False)
+        elif self.BMIindex >= "30" and self.BMIindex < "35":
+            self.needle_4.setHidden(False)
+        else:
+            self.needle_5.setHidden(False)
+
+        return self.BMIindex
+
+    def countdown(self):
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.displayTime)
+        self.timer.start(1000)
+
+    def displayTime(self):
+        if self.secs == 0:
+            self.lb_timer_bmi.setText("")
+            self.secs = 10
+            self.timer.stop()
+            if gv.SettingsInputs.value('Print or SMS') == 'Print and SMS':
+                ui.widget.setCurrentWidget(ui.posW)
+                ui.posW.countdown()
+            else:
+                ui.setandplay_bgm(printM)
+                ui.widget.setCurrentWidget(ui.gdapW)
+                ui.gdapW.countdown()
+        else:
+            self.lb_timer_bmi.setText(str(self.secs))
+            self.secs -= 1
+
+
+##################################################################################
 
 class POSWindow(QMainWindow):
     def __init__(self):
@@ -1129,6 +1230,7 @@ class UI():
         self.dW = DiagWindow()
         self.pssW = PSSWindow()
         self.bmiW = BMI()
+        self.bmiwwdW = BMIWWD()
         self.posW = POSWindow()
         self.ssmsW = SendSMSWindow()
         self.imgAdW = ImageAdDisplayWindow()
@@ -1141,7 +1243,7 @@ class UI():
                              self.OptionsW, self.setupW, self.wcW, self.hcW,
                              self.smscW, self.rW, self.dW, self.pssW, self.bmiW,
                              self.posW, self.ssmsW, self.imgAdW, self.gdapW, self.gdW,
-                             self.npW]
+                             self.npW, self.bmiwwdW]
 
         for i in self.widgets_list:
             self.widget.addWidget(i)
