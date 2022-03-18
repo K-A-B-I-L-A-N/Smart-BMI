@@ -40,7 +40,7 @@ class ImageAdDisplayWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == 65:
             self.mediaPlayer.stop()
-            ui.play_insertcoin()
+            ui.setandplay_bgm(insertcoin)
             ui.widget.setCurrentWidget(ui.InsertW)
 
 
@@ -78,7 +78,7 @@ class VideoAdDisplayWindow(QMainWindow):
             self.filename = self.clips[0]
             self.mediaPlayer.stop()
             self.flag = 0
-            ui.play_insertcoin()
+            ui.setandplay_bgm(insertcoin)
             ui.widget.setCurrentWidget(ui.InsertW)
 
     def video_run(self):
@@ -112,13 +112,13 @@ class InsertWindow(QMainWindow):
             reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply == QMessageBox.Yes:
-                ui.play_background()
+                ui.setandplay_bgm(background)
                 ui.widget.setCurrentWidget(ui.bmiW)
                 ui.bmiW.countdown()
 
         if event.key() == 83:
             ui.mmW.setFocus()
-            ui.play_background()
+            ui.setandplay_bgm(background)
             ui.widget.setCurrentWidget(ui.mmW)
 
 #############################################################################
@@ -675,7 +675,7 @@ class BMI(QMainWindow):
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
             else:
-                ui.play_printm()
+                ui.setandplay_bgm(printM)
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -697,7 +697,7 @@ class POSWindow(QMainWindow):
         self.timer_lb.setText("")
         self.timer.stop()
         self.secs = 10
-        ui.play_printm()
+        ui.setandplay_bgm(printM)
         ui.widget.setCurrentWidget(ui.gdapW)
         ui.gdapW.countdown()
 
@@ -739,7 +739,7 @@ class SendSMSWindow(QMainWindow):
     def gotogdW(self):
         if len(self.Mbno_ip.text()) == 10:
             self.Mbno_ip.clear()
-            ui.play_sms()
+            ui.setandplay_bgm(sms)
             ui.widget.setCurrentWidget(ui.gdW)
             ui.gdW.countdown()
 
@@ -824,7 +824,6 @@ class KBIPWindow(QWidget):
 
     def show_clr_bt(self):
 
-        self.kbip.setFocus()
         if len(self.kbip.text()) == 0:
             self.clr_bt.setVisible(False)
         else:
@@ -898,8 +897,8 @@ class AlphabetsWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            KB.kbui.close()
-            KB.kbipW.close()
+            KB.kbui.hide()
+            KB.kbipW.hide()
             self.LE.setText(txt)
 
         else:
@@ -927,9 +926,11 @@ class AlphabetsWindow(QWidget):
         KB.kbipW.hide()
         KB.kbui.show()
         KB.kbipW.show()
+        KB.kbipW.kbip.setMaxLength(32767)
+        KB.kbipW.kbip.setEchoMode(QLineEdit.Normal)
 
         if ui.mmW.Password_ip.hasFocus():
-
+            KB.kbipW.kbip.setEchoMode(QLineEdit.Password)    
             KB.kbipW.kbip.setText(ui.mmW.Password_ip.text())
             self.LE = ui.mmW.Password_ip
 
@@ -1004,8 +1005,8 @@ class NumpadWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            KB.kbui.close()
-            KB.kbipW.close()
+            KB.kbui.hide()
+            KB.kbipW.hide()
             self.LE.setText(txt)
 
         else:
@@ -1022,6 +1023,7 @@ class NumpadWindow(QWidget):
         KB.kbipW.hide()
         KB.kbui.show()
         KB.kbipW.show()
+        KB.kbipW.kbip.setMaxLength(32767)
 
         if ui.wcW.Mc_ip.hasFocus():
             KB.kbipW.kbip.setText(ui.wcW.Mc_ip.text())
@@ -1037,10 +1039,12 @@ class NumpadWindow(QWidget):
 
         elif ui.smscW.Mbno_ip.hasFocus():
             KB.kbipW.kbip.setText(ui.smscW.Mbno_ip.text())
+            KB.kbipW.kbip.setMaxLength(10)
             self.LE = ui.smscW.Mbno_ip
 
         elif ui.ssmsW.Mbno_ip.hasFocus():
             KB.kbipW.kbip.setText(ui.ssmsW.Mbno_ip.text())
+            KB.kbipW.kbip.setMaxLength(10)
             self.LE = ui.ssmsW.Mbno_ip
 
 #############################################################################################
@@ -1093,15 +1097,15 @@ class NumbersandSymbolsWindow(QWidget):
             txt += ' '
 
         elif char_ord == Qt.Key_Home:
-            KB.kbui.close()
-            KB.kbipW.close()
+            KB.kbui.hide()
+            KB.kbipW.hide()
             KB.alpW.LE.setText(txt)
 
         else:
             txt += chr(char_ord)
 
-        KB.kbipW.activateWindow()
         KB.kbipW.kbip.setText(txt)
+        KB.kbipW.activateWindow()
         KB.kbipW.kbip.setFocus()
 
 ###################################################################################
@@ -1145,8 +1149,8 @@ class UI():
         # set width and height
 
         self.widget.setGeometry(640, 140, 600, 1024)
-        self.run_ad()
         self.widget.show()
+        self.run_ad()
 
         #  BGM thread
         self.flag = 1
@@ -1168,23 +1172,8 @@ class UI():
             self.widget.setCurrentWidget(self.imgAdW)
             self.imgAdW.mediaPlayer.play()
 
-    def play_background(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(background)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_insertcoin(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(insertcoin)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_printm(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(printM)))
-        self.stop_bgm()
-        self.play_bgm()
-
-    def play_sms(self):
-        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(sms)))
+    def setandplay_bgm(self, filename):
+        self.Player.setMedia(QMediaContent(QUrl.fromLocalFile(filename)))
         self.stop_bgm()
         self.play_bgm()
 

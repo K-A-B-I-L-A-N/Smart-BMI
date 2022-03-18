@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>425</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,9 @@ border-radius:15px;
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>4</number>
+   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -294,6 +297,16 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="i_bt">
        <property name="sizePolicy">
@@ -402,16 +415,6 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <property name="leftMargin">
-      <number>15</number>
-     </property>
-     <property name="rightMargin">
-      <number>15</number>
-     </property>
      <item>
       <widget class="QPushButton" name="a_bt">
        <property name="sizePolicy">
@@ -559,6 +562,10 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="g_bt">
        <property name="sizePolicy">
@@ -739,64 +746,6 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QPushButton" name="caps_bt">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>75</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>51</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Proxima Nova</family>
-         <pointsize>10</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	background-color: rgb(193, 193, 193);
-}
-
-QPushButton:focus{
-	border:2px solid;
-	border-color : white;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../designs/icons/caps off.png</normaloff>../designs/icons/caps off.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>40</width>
-         <height>25</height>
-        </size>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QPushButton" name="z_bt">
        <property name="sizePolicy">
@@ -867,6 +816,64 @@ QPushButton:focus{
        </property>
        <property name="text">
         <string>x</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="caps_bt">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>75</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>51</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Proxima Nova</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: rgb(193, 193, 193);
+}
+
+QPushButton:focus{
+	border:2px solid;
+	border-color : white;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../designs/icons/caps off.png</normaloff>../designs/icons/caps off.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>25</height>
+        </size>
        </property>
       </widget>
      </item>

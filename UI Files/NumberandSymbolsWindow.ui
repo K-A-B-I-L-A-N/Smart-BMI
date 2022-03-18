@@ -309,6 +309,10 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="seven_bt">
        <property name="sizePolicy">
@@ -501,10 +505,6 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QPushButton" name="hyphen_bt">
        <property name="sizePolicy">
@@ -601,6 +601,10 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QPushButton" name="colon_bt">
        <property name="sizePolicy">
@@ -899,6 +903,10 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
       <widget class="QPushButton" name="sapostrophe_bt">
        <property name="sizePolicy">
@@ -995,10 +1003,6 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QPushButton" name="plus_bt">
        <property name="sizePolicy">
@@ -1191,6 +1195,10 @@ QPushButton:focus{
        </property>
       </widget>
      </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QPushButton" name="qmark_bt">
        <property name="sizePolicy">
