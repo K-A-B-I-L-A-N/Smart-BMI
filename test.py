@@ -1,4 +1,3 @@
-from email.charset import QP
 import glob
 import os
 import sys
