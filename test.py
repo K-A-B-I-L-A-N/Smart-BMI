@@ -1,4 +1,3 @@
-from email.charset import QP
 import glob
 import os
 import sys
@@ -684,7 +683,7 @@ class BMI(QMainWindow):
 
     def get_bmi(self):
         self.BMIindex = str("{:.2f}".format(
-            float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+            float(self.Wt) / ((float(self.Ht) / 100) ** 2)))
         
         print(self.BMIindex)
 
@@ -795,7 +794,7 @@ class BMIWWD(QMainWindow):
 
     def get_bmi(self):
         self.BMIindex = str("{:.2f}".format(
-            float(self.Ht) / ((float(self.Wt) / 100) ** 2)))
+            float(self.Wt) / ((float(self.Ht) / 100) ** 2)))
         
         print(self.BMIindex)
 
