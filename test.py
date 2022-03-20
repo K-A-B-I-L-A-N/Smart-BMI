@@ -1,3 +1,4 @@
+from email.charset import QP
 import glob
 import os
 import sys
@@ -40,10 +41,14 @@ class ImageAdDisplayWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == 65:
             self.mediaPlayer.stop()
+
             if gv.SettingsInputs.value('Language') == 'English':
                 ui.setandplay_bgm(insertcoin)
+                ui.InsertW.bg_lb.setPixmap(QPixmap("designs\screens\English\InsertCoin_02.jpg"))
             else:
                 ui.setandplay_bgm(insertcoin_tamil)
+                ui.InsertW.bg_lb.setPixmap(QPixmap("designs\screens\English\Insertcoin_tamil.png"))
+
             ui.widget.setCurrentWidget(ui.InsertW)
 
 
@@ -81,10 +86,14 @@ class VideoAdDisplayWindow(QMainWindow):
             self.filename = self.clips[0]
             self.mediaPlayer.stop()
             self.flag = 0
+
             if gv.SettingsInputs.value('Language') == 'English':
                 ui.setandplay_bgm(insertcoin)
+                ui.InsertW.bg_lb.setPixmap(QPixmap("designs\screens\English\InsertCoin_02.jpg"))
             else:
                 ui.setandplay_bgm(insertcoin_tamil)
+                ui.InsertW.bg_lb.setPixmap(QPixmap("designs\screens\English\Insertcoin_tamil.png"))
+
             ui.widget.setCurrentWidget(ui.InsertW)
 
     def video_run(self):
@@ -115,14 +124,31 @@ class InsertWindow(QMainWindow):
     def keyPressEvent(self, event):
 
         if event.key() == 65:
-            reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
+            if gv.SettingsInputs.value('Language') == 'English':
+                reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            else:
+                reply = QMessageBox.question(None, "Wish", "நாங்கள் எடையைக் காட்ட வேண்டுமா?",
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
             if reply == QMessageBox.Yes:
+
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.bmiW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmi.jpg"))
+                else:
+                    ui.bmiW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmi_tamil.png"))
+
                 ui.setandplay_bgm(background)
                 ui.widget.setCurrentWidget(ui.bmiW)
                 ui.bmiW.countdown()
             
             if reply == QMessageBox.No:
+
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.bmiwwdW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmiwwd.png"))
+                else:
+                    ui.bmiwwdW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmiwwd_tamil.png"))
+
                 ui.setandplay_bgm(background)
                 ui.widget.setCurrentWidget(ui.bmiwwdW)
                 ui.bmiwwdW.countdown()
@@ -685,14 +711,29 @@ class BMI(QMainWindow):
             self.lb_timer_bmi.setText("")
             self.secs = 10
             self.timer.stop()
+
             if gv.SettingsInputs.value('Print or SMS') == 'Print and SMS':
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.posW.question_lb.setText("Do you want print or SMS?")
+                    ui.posW.Print_bt.setIcon(QIcon(QPixmap("designs\icons\Print_btn.png")))
+                    ui.posW.Sms_bt.setIcon(QIcon(QPixmap("designs\icons\sms_btn.png")))    
+                    
+                else:
+                    ui.posW.question_lb.setText("உங்களுக்கு பிரிண்ட் அல்லது எஸ்எம்எஸ் வேண்டுமா?")
+                    ui.posW.Print_bt.setIcon(QIcon(QPixmap("designs\icons\Print_btn_tamil.png")))
+                    ui.posW.Sms_bt.setIcon(QIcon(QPixmap("designs\icons\sms_btn_tamil.png")))
+
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
+
             else:
                 if gv.SettingsInputs.value('Language') == 'English':
+                    ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\Get_down.jpg"))
                     ui.setandplay_bgm(printM)
                 else:
+                    ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\getdownap_tamil.png"))
                     ui.setandplay_bgm(printM_tamil)
+
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -781,14 +822,29 @@ class BMIWWD(QMainWindow):
             self.lb_timer_bmi.setText("")
             self.secs = 10
             self.timer.stop()
+
             if gv.SettingsInputs.value('Print or SMS') == 'Print and SMS':
+                if gv.SettingsInputs.value('Language') == 'English':
+                    ui.posW.question_lb.setText("Do you want print or SMS?")
+                    ui.posW.Print_bt.setIcon(QIcon(QPixmap("designs\icons\Print_btn.png")))
+                    ui.posW.Sms_bt.setIcon(QIcon(QPixmap("designs\icons\sms_btn.png")))    
+                    
+                else:
+                    ui.posW.question_lb.setText("உங்களுக்கு பிரிண்ட் அல்லது எஸ்எம்எஸ் வேண்டுமா?")
+                    ui.posW.Print_bt.setIcon(QIcon(QPixmap("designs\icons\Print_btn_tamil.png")))
+                    ui.posW.Sms_bt.setIcon(QIcon(QPixmap("designs\icons\sms_btn_tamil.png")))
+
                 ui.widget.setCurrentWidget(ui.posW)
                 ui.posW.countdown()
+
             else:
                 if gv.SettingsInputs.value('Language') == 'English':
+                    ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\Get_down.jpg"))
                     ui.setandplay_bgm(printM)
                 else:
+                    ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\getdownap_tamil.png"))
                     ui.setandplay_bgm(printM_tamil)
+
                 ui.widget.setCurrentWidget(ui.gdapW)
                 ui.gdapW.countdown()
         else:
@@ -810,10 +866,14 @@ class POSWindow(QMainWindow):
         self.timer_lb.setText("")
         self.timer.stop()
         self.secs = 10
+
         if gv.SettingsInputs.value('Language') == 'English':
+            ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\Get_down.jpg"))
             ui.setandplay_bgm(printM)
         else:
+            ui.gdapW.bg_lb.setPixmap(QPixmap("designs\screens\English\getdownap_tamil.png"))
             ui.setandplay_bgm(printM_tamil)
+
         ui.widget.setCurrentWidget(ui.gdapW)
         ui.gdapW.countdown()
 
@@ -821,6 +881,16 @@ class POSWindow(QMainWindow):
         self.timer_lb.setText("")
         self.timer.stop()
         self.secs = 10
+        if gv.SettingsInputs.value('Language') == 'English':
+            ui.ssmsW.question_lb.setText("Enter your phone number below to send SMS?")
+            ui.ssmsW.Send_bt.setText("Send")
+            ui.ssmsW.Back_bt.setText("Back")
+
+        else:
+            ui.ssmsW.question_lb.setText("விவரங்களை அனுப்ப கீழே உங்கள் தொலைபேசி எண்ணை உள்ளிடவா?")
+            ui.ssmsW.Send_bt.setText("அனுப்பு")
+            ui.ssmsW.Back_bt.setText("பின்")
+
         ui.widget.setCurrentWidget(ui.ssmsW)
 
     def countdown(self):
@@ -856,16 +926,23 @@ class SendSMSWindow(QMainWindow):
         if len(self.Mbno_ip.text()) == 10:
             self.Mbno_ip.clear()
             if gv.SettingsInputs.value('Language') == 'English':
+                ui.gdW.bg_lb.setPixmap(QPixmap("designs\screens\English\Get_down_new.jpg"))
                 ui.setandplay_bgm(sms)
             else:
+                ui.gdW.bg_lb.setPixmap(QPixmap("designs\screens\English\getdown_tamil.png"))
                 ui.setandplay_bgm(sms_tamil)
+
             ui.widget.setCurrentWidget(ui.gdW)
             ui.gdW.countdown()
 
         else:
             self.Mbno_ip.clear()
             msg = QMessageBox()
-            msg.setText("Enter a valid phone number")
+            if gv.SettingsInputs.value('Language') == 'English':
+                msg.setText("Enter a valid phone number")
+            else:
+                msg.setText("சரியான தொலைபேசி எண்ணை உள்ளிடவும்")
+
             msg.setIcon(QMessageBox.Information)
             x = msg.exec_()
 
@@ -877,7 +954,7 @@ class GetDownAPWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownAPWindow.ui", self)
-        self.secs = 7
+        self.secs = 6
 
     def countdown(self):
         self.timer = QTimer()
@@ -887,7 +964,7 @@ class GetDownAPWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 7
+            self.secs = 6
             ui.stop_bgm()
             ui.run_ad()
         else:
@@ -900,7 +977,7 @@ class GetDownWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("UI Files\GetDownWindow.ui", self)
-        self.secs = 7
+        self.secs = 6
 
     def countdown(self):
         self.timer = QTimer()
@@ -910,7 +987,7 @@ class GetDownWindow(QMainWindow):
     def displayTime(self):
         if self.secs <= 0:
             self.timer.stop()
-            self.secs = 7
+            self.secs = 6
             ui.stop_bgm()
             ui.run_ad()
         else:
