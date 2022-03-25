@@ -95,7 +95,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Select Print or :       Sms </string>
+        <string>Select Print or Sms :</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

@@ -1328,7 +1328,7 @@ class NumbersandSymbolsWindow(QWidget):
             txt += chr(char_ord)
 
         KB.kbipW.kbip.setText(txt)
-        # KB.kbipW.activateWindow()\
+        # KB.kbipW.activateWindow()
         KB.kbipW.kbip.setFocus()
 
 ###################################################################################
