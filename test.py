@@ -123,14 +123,33 @@ class InsertWindow(QMainWindow):
     def keyPressEvent(self, event):
 
         if event.key() == 65:
-            if gv.SettingsInputs.value('Language') == 'English':
-                reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            else:
-                reply = QMessageBox.question(None, "Wish", "நாங்கள் எடையைக் காட்ட வேண்டுமா?",
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
-            if reply == QMessageBox.Yes:
+            reply = QMessageBox()
+            reply.setIcon(QMessageBox.Question)
+            reply.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            b_yes = reply.button(QMessageBox.Yes)
+            b_no = reply.button(QMessageBox.No)
+
+            if gv.SettingsInputs.value('Language') == 'English':
+
+                # reply = QMessageBox.question(None, "Wish", "Do you want to display weight?",
+                #                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+                reply.setWindowTitle('Wish')
+                reply.setText("Do you want to display weight?")
+                b_yes.setText('Yes')
+                b_no.setText("No")
+                reply.exec_()
+
+            else:
+
+                reply.setWindowTitle('விருப்பம்')
+                reply.setText("நாங்கள் எடையைக் காட்ட வேண்டுமா?")
+                b_yes.setText('ஆம்')
+                b_no.setText("இல்லை")
+                reply.exec_()
+            
+            if reply.clickedButton() == b_yes:
 
                 if gv.SettingsInputs.value('Language') == 'English':
                     ui.bmiW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmi.jpg"))
@@ -141,7 +160,7 @@ class InsertWindow(QMainWindow):
                 ui.widget.setCurrentWidget(ui.bmiW)
                 ui.bmiW.countdown()
             
-            if reply == QMessageBox.No:
+            if reply.clickedButton() == b_no:
 
                 if gv.SettingsInputs.value('Language') == 'English':
                     ui.bmiwwdW.bg_lb.setPixmap(QPixmap(R"designs\screens\English\bmiwwd.png"))
@@ -881,12 +900,12 @@ class POSWindow(QMainWindow):
         self.timer.stop()
         self.secs = 10
         if gv.SettingsInputs.value('Language') == 'English':
-            ui.ssmsW.question_lb.setText("Enter your phone number below to send SMS?")
+            ui.ssmsW.question_lb.setText("Enter your phone number below to send SMS.")
             ui.ssmsW.Send_bt.setText("Send")
             ui.ssmsW.Back_bt.setText("Back")
 
         else:
-            ui.ssmsW.question_lb.setText("விவரங்களை அனுப்ப கீழே உங்கள் தொலைபேசி எண்ணை உள்ளிடவா?")
+            ui.ssmsW.question_lb.setText("விவரங்களை அனுப்ப கீழே உங்கள் தொலைபேசி எண்ணை உள்ளிடவும்.")
             ui.ssmsW.Send_bt.setText("அனுப்பு")
             ui.ssmsW.Back_bt.setText("பின்")
 
@@ -937,9 +956,16 @@ class SendSMSWindow(QMainWindow):
         else:
             self.Mbno_ip.clear()
             msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+
             if gv.SettingsInputs.value('Language') == 'English':
+                msg.setWindowTitle("Information")
                 msg.setText("Enter a valid phone number")
             else:
+                msg.setWindowTitle("தகவல்")
+                msg.setStandardButtons(QMessageBox.Ok)
+                b_ok = msg.button(QMessageBox.Ok)
+                b_ok.setText("சரி")
                 msg.setText("சரியான தொலைபேசி எண்ணை உள்ளிடவும்")
 
             msg.setIcon(QMessageBox.Information)
@@ -1105,7 +1131,7 @@ class AlphabetsWindow(QWidget):
             except:
                 pass
 
-        KB.kbipW.activateWindow()
+        # KB.kbipW.activateWindow()
         KB.kbipW.kbip.setText(txt)
         KB.kbipW.kbip.setFocus()
 
@@ -1208,7 +1234,7 @@ class NumpadWindow(QWidget):
             txt += chr(char_ord)
 
         KB.kbipW.kbip.setText(txt)
-        KB.kbipW.activateWindow()
+        # KB.kbipW.activateWindow()
         KB.kbipW.kbip.setFocus()
 
     def kb_disp(self, event):
@@ -1302,7 +1328,7 @@ class NumbersandSymbolsWindow(QWidget):
             txt += chr(char_ord)
 
         KB.kbipW.kbip.setText(txt)
-        KB.kbipW.activateWindow()
+        # KB.kbipW.activateWindow()
         KB.kbipW.kbip.setFocus()
 
 ###################################################################################
